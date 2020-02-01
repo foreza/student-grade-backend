@@ -4,11 +4,15 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var mongoose = require ('mongoose')
 var index = require('./routes/index');
 var users = require('./routes/users');
+var students = require('./routes/students');
 
 var app = express();
+
+// Connect to DB
+mongoose.connect('mongodb://localhost:27017/student-grade-db-ttt', { useNewUrlParser: true, useUnifiedTopology: true });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -22,6 +26,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Define our routes here
+app.use('/students', students);
 app.use('/users', users);
 app.use('/', index);
 
