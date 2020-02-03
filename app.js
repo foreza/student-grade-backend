@@ -12,7 +12,7 @@ var students = require('./routes/students');
 var app = express();
 
 // Connect to DB
-mongoose.connect('mongodb://localhost:27017/student-grade-db-ttt', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb://localhost:27017/student-grade-db-ttt', { useCreateIndex: true, useFindAndModify: false, useNewUrlParser: true, useUnifiedTopology: true });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

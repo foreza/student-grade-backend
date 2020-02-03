@@ -9,7 +9,7 @@ studentModelUtilities.listAllStudents = () => {
 
 // Return the mongoose method to find all student items
 studentModelUtilities.retrieveStudentByUID = (uid) => {
-    return studentModel.findOne({_id: uid});    
+    return studentModel.findById(uid);
 }
 
 // Create the student
@@ -18,5 +18,18 @@ studentModelUtilities.createStudent = (obj) => {
     return studentModel(obj).save();
 
 }
+
+// Return the mongoose method to delete a student by a given id
+studentModelUtilities.deleteStudentWithUID = (uid) => {
+    return studentModel.findByIdAndDelete(uid);
+}
+
+
+// Return the mongoose method to update all student items
+studentModelUtilities.updateStudentWithUID = (uid, obj) => {
+    return studentModel.findByIdAndUpdate(uid, obj);
+}
+
+
 
 module.exports = studentModelUtilities;                         // Make this accessible
