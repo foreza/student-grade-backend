@@ -14,17 +14,62 @@ var debugLogger = function (req, res, next) {
 router.use(debugLogger)
 
 
-// GET: List all students
+// GET: List all students in the given sort order
 router.get('/', async (req, res, next) => {
 
-    try {
-        const students = await studentUtils.listAllStudents();
-        res.json(students);
-    } catch (err) {
-        // On error, pass it off to somebody else!
-        next(err)
+    console.log(`keys: ${Object.keys(req.query)}`)
+
+    if (Object.keys(req.query).length > 1) {
+        try {
+            let sortType = req.query.sortType;              
+            let sortDir = Math.sign(req.query.sortDir);     // Cast it down to -1 or 1. -1 for ascend, +1 for descend
+
+            console.log(`Sort dir: ${sortDir} and Sort Type: ${sortType}`)
+
+            switch (sortType) {
+
+                case 'name': {
+                    const students = await studentUtils.listAllStudentsSortedByName(sortDir);
+                    res.json(students);
+                    break;
+                }
+            
+                case 'grade': {
+                    const students = await studentUtils.listAllStudentsSortedByGrade(sortDir);
+                    res.json(students);
+                    break;
+                }
+                    
+                default:
+                    // If we don't match any of the supported sort types, pass to the default handler
+                    next();
+                }
+
+            } catch (err) {
+            // On error, pass it off to default error handler
+            next(err);
+        } 
+    } else {
+        // If we don't have more than 1 query param, assume default list sort
+        next();
     }
+    
+ 
 })
+
+
+router.get('/', async (req, res, next) => {
+
+        try {
+            const students = await studentUtils.listAllStudentsDefaultSorted();
+            res.json(students);
+        } catch (err) {
+            // On error, pass it off to somebody else!
+            next(err)
+        }
+ 
+})
+
 
 // POST: Add a new student 
 router.post('/', async (req, res, next) => {

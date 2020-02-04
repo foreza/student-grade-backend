@@ -3,8 +3,16 @@ const studentModelUtilities = {};                               // We'll define 
 
 
 // Return the mongoose method to find all student items
-studentModelUtilities.listAllStudents = () => {
-    return studentModel.find();    
+studentModelUtilities.listAllStudentsDefaultSorted = () => {
+    return studentModel.find().sort({name:1});    // TODO: What if we have too many students??
+}
+
+studentModelUtilities.listAllStudentsSortedByName = (dir) => {
+    return studentModel.find().sort({name: dir});    
+}
+
+studentModelUtilities.listAllStudentsSortedByGrade = (dir) => {
+    return studentModel.find().sort({grade: dir});    
 }
 
 // Return the mongoose method to find all student items
