@@ -9,6 +9,9 @@ var mongoose = require ('mongoose')
 var index = require('./routes/index');
 var students = require('./routes/students');
 
+var cors = require('cors')
+
+
 var app = express();
 
 // Connect to DB
@@ -25,6 +28,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Use CORS
+app.use(cors())
+
 
 // Define our routes here
 app.use('/students', students);
