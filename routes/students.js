@@ -1,30 +1,15 @@
 const router = require('express').Router();
 const studentUtils = require('../db/util_students');
-
-
-// MiddleWare: logging all requests to /student
-var debugLogger = function (req, res, next) {
-    console.log(` Received ${req.method} request to: ${req.baseUrl}`)
-    next()
-}
-
-
-
-// All routers should use the debug logger (TEMP)
-router.use(debugLogger)
+const middleware = require('../middleware/collection')
 
 
 // GET: List all students in the given sort order
-router.get('/', async (req, res, next) => {
-
-    console.log(`keys: ${Object.keys(req.query)}`)
+router.get('/', middleware.logger, async (req, res, next) => {
 
     if (Object.keys(req.query).length > 1) {
         try {
             let sortType = req.query.sortType;              
             let sortDir = Math.sign(req.query.sortDir);     // Cast it down to -1 or 1. -1 for ascend, +1 for descend
-
-            console.log(`Sort dir: ${sortDir} and Sort Type: ${sortType}`)
 
             switch (sortType) {
 
@@ -58,7 +43,7 @@ router.get('/', async (req, res, next) => {
 })
 
 
-router.get('/', async (req, res, next) => {
+router.get('/', middleware.logger, async (req, res, next) => {
 
         try {
             const students = await studentUtils.listAllStudentsDefaultSorted();
@@ -72,7 +57,7 @@ router.get('/', async (req, res, next) => {
 
 
 // POST: Add a new student 
-router.post('/', async (req, res, next) => {
+router.post('/', middleware.logger, async (req, res, next) => {
 
     try {
         const result = await studentUtils.createStudent(req.body)
@@ -86,21 +71,9 @@ router.post('/', async (req, res, next) => {
 
 
 
-// For all routes that take in an ID, check the mongo object ID to verify it is valid
-router.all('/:id', function (req, res, next) {
-
-    if (req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
-        next()
-    } else {
-        console.error(`Received bad mongo id in request`)
-        res.sendStatus(404);
-    }
-});
-
-
 
 // GET: List a specific student by ID
-router.get('/:id', async (req, res, next) => {
+router.get('/:id', [middleware.logger, middleware.checkMongoID], async (req, res, next) => {
 
     try {
         const students = await studentUtils.retrieveStudentByUID(req.params.id);
@@ -113,7 +86,7 @@ router.get('/:id', async (req, res, next) => {
 
 
 // DELETE: List a specific student by ID
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', [middleware.logger, middleware.checkMongoID], async (req, res, next) => {
 
     try {
         const result = await studentUtils.deleteStudentWithUID(req.params.id);
@@ -129,7 +102,7 @@ router.delete('/:id', async (req, res, next) => {
 
 
 // PUT: Modify a student (providing the entire student info in the request) given an ID
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', [middleware.logger, middleware.checkMongoID], async (req, res, next) => {
 
     try {
         const result = await studentUtils.updateStudentWithUID(req.params.id, req.body)
