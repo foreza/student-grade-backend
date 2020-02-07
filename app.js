@@ -17,6 +17,12 @@ var app = express();
 // Connect to DB
 mongoose.connect('mongodb://localhost:27017/student-grade-db-ttt', { useCreateIndex: true, useFindAndModify: false, useNewUrlParser: true, useUnifiedTopology: true });
 
+// Event handlers
+mongoose.connection.on('error', err => { console.log("Mongoose connection error")});
+mongoose.connection.on('connected', () => { console.log("Mongoose connected success")});
+mongoose.connection.on('disconnected', () => { console.log("Mongoose disconnected")});
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
