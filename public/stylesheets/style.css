@@ -1,8 +1,170 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+
+/* Reset all margin/padding/spacing */
+* {
+  margin: 0;
+  padding: 0;
+  border-spacing: 0;
 }
 
-a {
-  color: #00B7FF;
+
+/* Dark Mode Styles */
+
+.darkMode {
+  border: #ffffff;    /* Set all borders to white */
+  color: #ffffff;     /* Set all font color to white */
+  background-color: #000000; /* Set the background color to black */
+  background: #000000; /* Set the background color to black */
 }
+
+
+.darkMode #table-grades tr td input[type="text"], .darkMode #table-grades tr td input[type="number"]{
+  background: #000000;
+  color: #ffffff;     /* Set all font color to white */
+
+}
+
+/* Error Input Styles */
+
+#table-grades tr td input[type="text"].error , #table-grades tr td input[type="number"].error  {
+  border: 2px solid red;
+}
+
+
+/* Header content styles */
+
+#header-setting {
+  width: 100%;        
+  position: relative;
+  display: block;
+  padding: 1em;
+}
+
+.header-button-select {
+  margin: 10px auto;
+  border: 1px solid #000000;
+  display: block;
+  font-size: 1.5em;
+  height: 1.2em;
+  padding-left: 1em;
+  padding-right: 1em;
+  
+}
+
+/* TODO: fix this */
+/* .header-button-select:active{
+  color: #ffffff;
+  margin-top: 2px;
+  background: #000000;
+} */
+
+/* Main content styles */
+
+h1 {
+  font-family: 'Courier New', Courier, monospace;
+  text-align: center;
+  font-size: 3em;
+}
+
+
+#table-grades {
+  margin: 0 auto;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 2em;
+  border: 2px solid #000000;                        /* Color set default to black */
+  min-width: 300px;
+}
+
+#table-grades th {
+  padding-left: 1em;
+  padding-right: 1em;
+  border: 1px solid;
+  font-size: 1.2em;
+}
+
+
+#table-grades tr {
+  text-align: center;
+}
+
+#table-grades tr td input[type="text"], #table-grades tr td input[type="number"] {
+  font: unset;
+  text-align: center;
+}
+
+
+#table-grades tr td input[type="button"] {
+  width: 50%;
+  font-size: 1em;
+}
+
+
+#table-grades tr:hover{
+  background-color: #cccccc;
+}
+
+#table-grades td {
+  border: 1px solid;
+}
+
+
+
+#table-grades .on-hover-show{
+  position: relative;
+  display: block;
+  min-width: 3em;
+}
+
+#table-grades .on-hover-show button{
+  font-size: 1rem;
+  padding: 3px;
+}
+
+/* Dropdown content should be absent from display */
+#table-grades .dropdown-content{
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+
+}
+
+/* Make button invisible on hover */
+#table-grades .on-hover-show:hover button{
+  visibility: hidden;
+}
+
+/* Show the dropdown-content on hover */ 
+#table-grades .on-hover-show:hover .dropdown-content{
+  display: block;
+}
+
+/* By default, the edit section should not be displayed */
+#table-grades .edit-content-hidden{
+  display: none;
+}
+
+/* When the editable class is added, show the element */
+#table-grades .is-editable{
+  display: block;
+}
+
+
+#table-grades .dropdown-content a, #table-grades .is-editable a {
+  height: 1rem;
+  display: block;
+  font-size: 1rem;    
+  border: 1px dashed;
+}
+
+#table-grades .dropdown-content a:hover, #table-grades .is-editable a:hover {
+  font-weight: 900;
+  background-color: #777777;
+}
+
+#nameSortStateCaret, #gradeSortStateCaret {
+  font-size: 0.75em;
+}
+
+
+/* Footer styles */
