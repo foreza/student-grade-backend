@@ -34,7 +34,13 @@
 				</thead>
 				<!-- (Sample) Table Content -->
 				<tbody>
-					<!-- Content is inserted here dynamically -->
+          <% for (var i = 0; i < students.length; i++) { %>
+            <tr>
+              <td><%= students[i].name %></td>
+              <td><%= students[i].grade %></td>
+              <td><button>Test</button></td>
+            </tr>
+            <% } %>
 				</tbody>
 				<tfoot>
 					<tr>
