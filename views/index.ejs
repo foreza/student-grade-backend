@@ -23,10 +23,14 @@
 				<!-- Table Header -->
 				<thead>
 					<tr>
-						<th onclick="click_sortTableByName()">Name 
+						<th id="sortTableByName">
+							
+							<a href="<%= sortNameLink %>">Name</a> 
 							<span id="nameSortStateCaret">*</span>
-						</th>
-						<th onclick="click_sortTableByGrade()">Grade 
+							</th>
+						</a>
+						<th id="sortTableByGrade">
+							<a href="<%= sortNameLink %>">Grade</a> 
 							<span id="gradeSortStateCaret">*</span>
 						</th>
 						<th>Options</th>
@@ -59,7 +63,8 @@
 		</main>
     <footer></footer>
     
-    <script src="js/darkMode.js"></script>
+    <!-- <script src="js/darkMode.js"></script>
+    <script src="js/sort.js"></script> -->
 
 
 		<!-- Load JS at the end of the document -->
