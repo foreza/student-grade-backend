@@ -25,12 +25,13 @@
 					<tr>
 						<th id="sortTableByName">
 							
-							<a href="<%= sortNameLink %>">Name</a> 
+							
+							<a href="/?sortType=name&sortDir=<%= sortDir * -1 %>">Name</a> 
 							<span id="nameSortStateCaret">*</span>
 							</th>
 						</a>
 						<th id="sortTableByGrade">
-							<a href="<%= sortNameLink %>">Grade</a> 
+							<a href="?sortType=grade&sortDir=<%= sortDir * -1 %>">Grade</a> 
 							<span id="gradeSortStateCaret">*</span>
 						</th>
 						<th>Options</th>
