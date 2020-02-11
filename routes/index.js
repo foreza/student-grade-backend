@@ -16,6 +16,16 @@ router.post('/', async (req, res, next) => {
 
 })
 
+router.get('/delete/:id', async (req, res, next) => {
+
+  try {
+    const result = await studentUtils.deleteStudentWithUID(req.params.id);
+    res.redirect('/')
+} catch (err) {
+    next(err)
+}
+
+});
 
 /* Rendering student view */
 router.get('/', async (req, res, next) => {
