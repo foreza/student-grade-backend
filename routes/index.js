@@ -12,16 +12,15 @@ router.get('/', async (req, res, next) => {
       "title": 'Advanced!',
       "students": null,         // Store the returned / sorted students collection
       "sortType": null,
-      "nameSortDir": null,             // Let the page know what the intended sort direction is. 1 for descend, -1 for ascend
-      "gradeSortDir": null,           // Let the page know what the intended sort direction is. 1 for descend, -1 for ascend
+      "sortDir": null,
       "darkMode": 1           // Let the page know intended darkMode state. -1 for darkMode off, 1 for on.
     }
 
     try {
 
       // Get the current state of sort.
-      renderParams.nameSortDir = req.query.nameSortDir === undefined ? "1" : Math.sign(req.query.nameSortDir);        // Cast it down to -1 or 1. -1 for ascend, +1 for descend
-      renderParams.gradeSortDir = req.query.gradeSortDir === undefined ? "1" : Math.sign(req.query.gradeSortDir);        // Cast it down to -1 or 1. -1 for ascend, +1 for descend
+      renderParams.sortDir = req.query.sortDir === undefined ? "1" : Math.sign(req.query.sortDir) * -1;        // Cast it down to -1 or 1. -1 for ascend, +1 for descend
+      // renderParams.gradeSortDir = req.query.gradeSortDir === undefined ? "1" : Math.sign(req.query.gradeSortDir);        // Cast it down to -1 or 1. -1 for ascend, +1 for descend
 
       // sortTypes can be either "name" or "grade". If this is not passed in the query param, assume name sort.
       renderParams.sortType = req.query.sortType === undefined ? "name" : req.query.sortType;                 
@@ -31,10 +30,10 @@ router.get('/', async (req, res, next) => {
         // Populate the students collection with the appropriate sort
         switch (renderParams.sortType) {
           case "name":
-            renderParams.students = await studentUtils.listAllStudentsSortedByName(renderParams.nameSortDir);
+            renderParams.students = await studentUtils.listAllStudentsSortedByName(renderParams.sortDir);
             break;
           case "grade":
-            renderParams.students = await studentUtils.listAllStudentsSortedByGrade(renderParams.gradeSortDir);
+            renderParams.students = await studentUtils.listAllStudentsSortedByGrade(renderParams.sortDir);
             break;
           default:
             renderParams.students = await studentUtils.listAllStudentsDefaultSorted();
