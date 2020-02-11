@@ -48,7 +48,17 @@
             <tr>
               <td><%= students[i].name %></td>
               <td><%= students[i].grade %></td>
-              <td><button>Test</button></td>
+              <td>
+				  <div class="on-hover-show">
+					<button>
+						<span>Menu</span>
+					  </button>
+					  <div class="dropdown-content">
+						<a href="/?edit=<%= students[i]._id %>">Edit</a>
+						<a href="/?delete=<%= students[i]._id %>">Delete</a>
+					</div>
+				  </div>
+				  </td>
             </tr>
             <% } %>
 				</tbody>
