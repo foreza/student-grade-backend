@@ -7,13 +7,6 @@ var router = express.Router();
 /* Rendering student view */
 router.get('/', async (req, res, next) => {
 
-  // Initially set darkMode cookie if it's not defined
-  if (typeof req.cookies.darkMode === "undefined") {
-    console.log("setting initial cookie");
-    res.cookie('darkMode', -1); 
-  }
-
-
      // Make a render params object to be utilized. Set default values
      let renderParams = {
       "title": 'Advanced!',
@@ -44,20 +37,33 @@ router.get('/', async (req, res, next) => {
             renderParams.students = await studentUtils.listAllStudentsSortedByGrade(renderParams.gradeSortDir);
             break;
           default:
-            console.log(`sorting by default`);
             renderParams.students = await studentUtils.listAllStudentsDefaultSorted();
         }
 
 
-        // if (req.query.darkMode !== "undefined") {
-        //   res.cookie('darkMode', req.query.darkMode); 
-        // } else {
-        //   console.log(`res.cookie.darkMode ${res.cookies.darkMode}`)
-        // }
-  
-        // renderParams.darkMode = req.cookies.darkMode;
 
+          // Initially set darkMode cookie if it's not defined
+          if (typeof req.cookies.darkMode === "undefined") {
+              console.log("setting initial cookie");
+              res.cookie('darkMode', -1); 
+              renderParams.darkMode = -1;
+          } else {
 
+            console.log("req query darkmode", req.query.darkMode);
+
+            if (typeof req.query.darkMode === "undefined") {
+              console.log("dark mode not provided in query")
+              renderParams.darkMode = Number(req.cookies.darkMode);
+            } else {
+              console.log("dark mode was provided in query")
+              renderParams.darkMode = Number(req.query.darkMode);
+              res.cookie('darkMode', Number(req.query.darkMode)); 
+            }
+
+        }
+        
+   
+    
 
         res.render('index', renderParams);
 
