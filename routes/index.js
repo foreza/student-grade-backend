@@ -10,7 +10,6 @@ router.post('/', async (req, res, next) => {
     const result = await studentUtils.createStudent(req.body)
     res.redirect('/')
 } catch (err) {
-    // On error, pass it off to somebody else!
     next(err)
 }
 
@@ -27,6 +26,19 @@ router.get('/delete/:id', async (req, res, next) => {
 
 });
 
+
+router.post('/save/:id', async (req, res, next) => {
+
+  try {
+    console.log("saving id");
+    const result = await studentUtils.updateStudentWithUID(req.params.id, req.body);
+    res.redirect('/')
+} catch (err) {
+    next(err)
+}
+
+});
+
 /* Rendering student view */
 router.get('/', async (req, res, next) => {
 
@@ -34,6 +46,7 @@ router.get('/', async (req, res, next) => {
      let renderParams = {
       "title": 'Advanced!',
       "students": null,         // Store the returned / sorted students collection
+      "editableId": null,
       "sortType": null,
       "sortDir": null,
       "darkMode": 1           // Let the page know intended darkMode state. -1 for darkMode off, 1 for on.
@@ -45,7 +58,10 @@ router.get('/', async (req, res, next) => {
       renderParams.sortDir = req.query.sortDir === undefined ? "1" : Math.sign(req.query.sortDir) * -1;        // Cast it down to -1 or 1. -1 for ascend, +1 for descend
 
       // sortTypes can be either "name" or "grade". If this is not passed in the query param, assume name sort.
-      renderParams.sortType = req.query.sortType === undefined ? "name" : req.query.sortType;                 
+      renderParams.sortType = req.query.sortType === undefined ? "name" : req.query.sortType;       
+      
+      renderParams.editableId = req.query.editable === undefined ? "" : req.query.editable;        // Cast it down to -1 or 1. -1 for ascend, +1 for descend
+      console.log("editable id: " + req.query.editable);
 
         // sortDirection is either -1 or 1. If this is not passed in the query param, assume 1.
 
@@ -95,25 +111,5 @@ router.get('/', async (req, res, next) => {
   });
 
 
-//   router.get('/', async (req, res, next) => {
-
-//   try {
-
-//     let renderParams = {
-//       "title": 'Advanced!',
-//       "students": null,     // Store the returned / sorted students collection
-//       "darkMode": -1,        // Let the page know intended darkMode state
-//       "sortDir": 1,         // Let the page know what the intended sort direction is
-//       "sortType": 0        // Let the page know what the intended sort type is
-//     }
-
-//     // If no valid query params were passed, do a default show
-//     renderParams.students = await studentUtils.listAllStudentsDefaultSorted();
-//     res.render('index', renderParams);
-//   } catch (err) {
-//     next(err)
-//   }
-
-// });
 
 module.exports = router;

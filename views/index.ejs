@@ -46,19 +46,39 @@
 				<tbody>
           <% for (var i = 0; i < students.length; i++) { %>
             <tr>
-              <td><%= students[i].name %></td>
-              <td><%= students[i].grade %></td>
+				<% if (students[i]._id == editableId) {%>
               <td>
+				  <input form="studentEditForm" name="name" type="text" value="<%= students[i].name %>" required="true"/>
+				</td>
+              <td>
+				  <input form="studentEditForm" name="grade" type="text" value="<%= students[i].grade %>" required="true"/>
+			  </td>
+              <td>
+					<div class="on-edit-show">
+						<div class="">
+							<button form="studentEditForm" type="submit">Save</button>
+							<a href="/">Cancel</a>
+						</div>
+
+					</div>
+				</td>
+				<form id="studentEditForm" method="POST" action="/save/<%= students[i]._id %>"></form>
+					<% } else{ %>  
+						<td><%= students[i].name %></td>
+						<td><%= students[i].grade %></td>
+						<td>
 				  <div class="on-hover-show">
 					<button>
 						<span>Menu</span>
 					  </button>
 					  <div class="dropdown-content">
-						<a href="/edit/<%= students[i]._id %>">Edit</a>
+						<a href="/?editable=<%= students[i]._id %>">Edit</a>
 						<a href="/delete/<%= students[i]._id %>">Delete</a>
 					</div>
 				  </div>
+				  
 				  </td>
+				  <% } %>
             </tr>
             <% } %>
 				</tbody>
