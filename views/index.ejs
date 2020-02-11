@@ -18,7 +18,6 @@
 	 <% } %>
 
 		<header>
-			<!-- TODO: Implement a toggle between Light/Dark Mode  -->
 			<div id="header-setting">
 				<!-- <button onclick=""id="darkModeToggle" class="header-button-select" value="">Toggle Dark Mode</button> -->
 				<a href="/?darkMode=<%= darkMode * -1 %>&sortType=<%= sortType %>&sortDir=<%= sortDir %>">Toggle Dark Mode</a> 
@@ -48,10 +47,10 @@
             <tr>
 				<% if (students[i]._id == editableId) {%>
               <td>
-				  <input form="studentEditForm" name="name" type="text" value="<%= students[i].name %>" required="true"/>
+				  <input form="studentEditForm" name="name" type="text" maxlength="12" value="<%= students[i].name %>" required="true"/>
 				</td>
               <td>
-				  <input form="studentEditForm" name="grade" type="text" value="<%= students[i].grade %>" required="true"/>
+				  <input form="studentEditForm" name="grade" type="number" min="0" max="100" value="<%= students[i].grade %>" required="true"/>
 			  </td>
               <td>
 					<div class="on-edit-show">
@@ -85,7 +84,7 @@
 				<tfoot>
 					<tr>
 						<td>
-							<input form="studentSubmissionForm" name="name" type="text" placeholder="Name" required="true"/>
+							<input form="studentSubmissionForm" name="name" type="text" placeholder="Name" maxlength="12" required="true"/>
 						</td>
 						<td>
 							<input form="studentSubmissionForm" name="grade" id="input-grade" type="number" min="0" max="100" placeholder="0" required="true"/>
