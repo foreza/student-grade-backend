@@ -21,7 +21,7 @@
 			<!-- TODO: Implement a toggle between Light/Dark Mode  -->
 			<div id="header-setting">
 				<!-- <button onclick=""id="darkModeToggle" class="header-button-select" value="">Toggle Dark Mode</button> -->
-				<a href="/?darkMode=<%= darkMode * -1 %>">Toggle Dark Mode</a> 
+				<a href="/?darkMode=<%= darkMode * -1 %>&sortType=<%= sortType %>&sortDir=<%= sortDir %>">Toggle Dark Mode</a> 
 			</div>
 		</header>
 		<main>
@@ -31,12 +31,12 @@
 				<thead>
 					<tr>
 						<th id="sortTableByName">
-							<a href="/?sortType=name&sortDir=<%= sortDir %>">Name</a> 
+							<a href="/?sortType=name&sortDir=<%= sortDir * -1%>">Name</a> 
 							<span id="nameSortStateCaret">*</span>
 							</th>
 						</a>
 						<th id="sortTableByGrade">
-							<a href="/?sortType=grade&sortDir=<%= sortDir %>">Grade</a> 
+							<a href="/?sortType=grade&sortDir=<%= sortDir * -1 %>">Grade</a> 
 							<span id="gradeSortStateCaret">*</span>
 						</th>
 						<th>Options</th>
@@ -57,12 +57,12 @@
 					<div class="on-edit-show">
 						<div class="">
 							<button form="studentEditForm" type="submit">Save</button>
-							<a href="/">Cancel</a>
+							<a href="/?sortType=<%= sortType %>&sortDir=<%= sortDir %>">Cancel</a>
 						</div>
 
 					</div>
 				</td>
-				<form id="studentEditForm" method="POST" action="/save/<%= students[i]._id %>"></form>
+				<form id="studentEditForm" method="POST" action="/save/<%= students[i]._id %>?sortType=<%= sortType %>&sortDir=<%= sortDir %>"></form>
 					<% } else{ %>  
 						<td><%= students[i].name %></td>
 						<td><%= students[i].grade %></td>
@@ -72,7 +72,7 @@
 						<span>Menu</span>
 					  </button>
 					  <div class="dropdown-content">
-						<a href="/?editable=<%= students[i]._id %>">Edit</a>
+						<a href="/?editable=<%= students[i]._id %>&sortType=<%= sortType %>&sortDir=<%= sortDir %>">Edit</a>
 						<a href="/delete/<%= students[i]._id %>?sortType=<%= sortType %>&sortDir=<%= sortDir %>">Delete</a>
 					</div>
 				  </div>
@@ -97,7 +97,7 @@
 					
 				</tfoot>
 
-				<form id="studentSubmissionForm" method="POST" action="/"></form>
+				<form id="studentSubmissionForm" method="POST" action="/?sortType=<%= sortType %>&sortDir=<%= sortDir %>"></form>
 
 			</table>
 		</main>

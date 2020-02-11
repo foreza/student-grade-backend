@@ -8,7 +8,7 @@ router.post('/', async (req, res, next) => {
 
   try {
     const result = await studentUtils.createStudent(req.body)
-    res.redirect('/')
+    res.redirect(util_generateRedirectStringFromReq(req))
 } catch (err) {
     next(err)
 }
@@ -18,13 +18,8 @@ router.post('/', async (req, res, next) => {
 router.get('/delete/:id', async (req, res, next) => {
 
   try {
-    const result = await studentUtils.deleteStudentWithUID(req.params.id);
-
-    let sortDir = req.query.sortDir === undefined ? "1" : Math.sign(req.query.sortDir) * -1;        // Cast it down to -1 or 1. -1 for ascend, +1 for descend
-    let sortType = req.query.sortType === undefined ? "name" : req.query.sortType;    
-
-    // Get everything from the query string to maintain current status
-    res.redirect(`/?sortType=${sortType}&sortDir=${sortDir}`);
+    await studentUtils.deleteStudentWithUID(req.params.id);
+    res.redirect(util_generateRedirectStringFromReq(req));
 } catch (err) {
     next(err)
 }
@@ -32,12 +27,20 @@ router.get('/delete/:id', async (req, res, next) => {
 });
 
 
+// TODO: Middleware function to redirect
+function util_generateRedirectStringFromReq(req, res, next){
+  let sortDir = req.query.sortDir === undefined ? "1" : Math.sign(req.query.sortDir);
+  let sortType = req.query.sortType === undefined ? "name" : req.query.sortType;  
+  return `/?sortType=${sortType}&sortDir=${sortDir}`;  
+}
+
+
+
 router.post('/save/:id', async (req, res, next) => {
 
   try {
-    console.log("saving id");
-    const result = await studentUtils.updateStudentWithUID(req.params.id, req.body);
-    res.redirect('/')
+    await studentUtils.updateStudentWithUID(req.params.id, req.body);
+    res.redirect(util_generateRedirectStringFromReq(req))
 } catch (err) {
     next(err)
 }
@@ -57,14 +60,10 @@ router.get('/', async (req, res, next) => {
       "darkMode": 1           // Let the page know intended darkMode state. -1 for darkMode off, 1 for on.
     }
 
-    console.log(`This query has : ${Object.keys(req.query).length}`);
-    console.log(`This has saved state has : ${res.locals.renderState}`);
-
-
     try {
 
       // Get the current state of sort.
-      renderParams.sortDir = req.query.sortDir === undefined ? "1" : Math.sign(req.query.sortDir) * -1;        // Cast it down to -1 or 1. -1 for ascend, +1 for descend
+      renderParams.sortDir = req.query.sortDir === undefined ? "1" : Math.sign(req.query.sortDir);        // Cast it down to -1 or 1. -1 for ascend, +1 for descend
 
       // sortTypes can be either "name" or "grade". If this is not passed in the query param, assume name sort.
       renderParams.sortType = req.query.sortType === undefined ? "name" : req.query.sortType;       
