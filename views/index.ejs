@@ -9,12 +9,19 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
 
   </head>
-  <body id="body-content">
+
+
+	<% if(darkMode == 1){ %>
+		<body class="darkMode" id="body-content">
+	  <% } else{ %>  
+		<body  id="body-content">
+	 <% } %>
 
 		<header>
 			<!-- TODO: Implement a toggle between Light/Dark Mode  -->
 			<div id="header-setting">
-				<button id="darkModeToggle" class="header-button-select" value="">Toggle Dark Mode</button>
+				<!-- <button onclick=""id="darkModeToggle" class="header-button-select" value="">Toggle Dark Mode</button> -->
+				<a href="/?darkMode=<%= darkMode * -1 %>">Toggle Dark Mode</a> 
 			</div>
 		</header>
 		<main>
@@ -24,14 +31,12 @@
 				<thead>
 					<tr>
 						<th id="sortTableByName">
-							
-							
-							<a href="/?sortType=name&sortDir=<%= sortDir * -1 %>">Name</a> 
+							<a href="/?sortType=name&nameSortDir=<%= nameSortDir * -1 %>&gradeSortDir=<%= gradeSortDir%>">Name</a> 
 							<span id="nameSortStateCaret">*</span>
 							</th>
 						</a>
 						<th id="sortTableByGrade">
-							<a href="?sortType=grade&sortDir=<%= sortDir * -1 %>">Grade</a> 
+							<a href="/?sortType=grade&nameSortDir=<%= nameSortDir %>&gradeSortDir=<%= gradeSortDir * -1 %>">Grade</a> 
 							<span id="gradeSortStateCaret">*</span>
 						</th>
 						<th>Options</th>
@@ -63,16 +68,6 @@
 			</table>
 		</main>
     <footer></footer>
-    
-    <!-- <script src="js/darkMode.js"></script>
-    <script src="js/sort.js"></script> -->
-
-
-		<!-- Load JS at the end of the document -->
-		<!-- <script src="js/jquery-3.4.1.js"></script>
-		<script src="js/input-validation.js"></script>
-		<script src="js/sortView.js"></script>
-		<script src="js/studentGrades.js"></script> -->
 	</body>
 
 </html>
