@@ -19,7 +19,12 @@ router.get('/delete/:id', async (req, res, next) => {
 
   try {
     const result = await studentUtils.deleteStudentWithUID(req.params.id);
-    res.redirect('/')
+
+    let sortDir = req.query.sortDir === undefined ? "1" : Math.sign(req.query.sortDir) * -1;        // Cast it down to -1 or 1. -1 for ascend, +1 for descend
+    let sortType = req.query.sortType === undefined ? "name" : req.query.sortType;    
+
+    // Get everything from the query string to maintain current status
+    res.redirect(`/?sortType=${sortType}&sortDir=${sortDir}`);
 } catch (err) {
     next(err)
 }
@@ -51,6 +56,10 @@ router.get('/', async (req, res, next) => {
       "sortDir": null,
       "darkMode": 1           // Let the page know intended darkMode state. -1 for darkMode off, 1 for on.
     }
+
+    console.log(`This query has : ${Object.keys(req.query).length}`);
+    console.log(`This has saved state has : ${res.locals.renderState}`);
+
 
     try {
 
@@ -109,7 +118,5 @@ router.get('/', async (req, res, next) => {
       }
 
   });
-
-
 
 module.exports = router;
