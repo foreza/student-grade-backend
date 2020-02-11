@@ -65,16 +65,20 @@
 				<tfoot>
 					<tr>
 						<td>
-							<input id="input-name" type="text" placeholder="Name" required="true"/>
+							<input form="studentSubmissionForm" name="name" type="text" placeholder="Name" required="true"/>
 						</td>
 						<td>
-							<input id="input-grade" type="number" min="0" max="100" placeholder="0" required="true"/>
+							<input form="studentSubmissionForm" name="grade" id="input-grade" type="number" min="0" max="100" placeholder="0" required="true"/>
 						</td>
 						<td>
-							<input onclick="click_attemptAddNewRow()" type="button" value="Add"/>
+							<button form="studentSubmissionForm" type="submit">Add Student</button>
 						</td>
 					</tr>
+					
 				</tfoot>
+
+				<form id="studentSubmissionForm" method="POST" action="/"></form>
+
 			</table>
 		</main>
     <footer></footer>

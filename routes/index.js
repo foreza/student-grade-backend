@@ -4,6 +4,19 @@ var router = express.Router();
 
 
 
+router.post('/', async (req, res, next) => {
+
+  try {
+    const result = await studentUtils.createStudent(req.body)
+    res.redirect('/')
+} catch (err) {
+    // On error, pass it off to somebody else!
+    next(err)
+}
+
+})
+
+
 /* Rendering student view */
 router.get('/', async (req, res, next) => {
 
@@ -20,7 +33,6 @@ router.get('/', async (req, res, next) => {
 
       // Get the current state of sort.
       renderParams.sortDir = req.query.sortDir === undefined ? "1" : Math.sign(req.query.sortDir) * -1;        // Cast it down to -1 or 1. -1 for ascend, +1 for descend
-      // renderParams.gradeSortDir = req.query.gradeSortDir === undefined ? "1" : Math.sign(req.query.gradeSortDir);        // Cast it down to -1 or 1. -1 for ascend, +1 for descend
 
       // sortTypes can be either "name" or "grade". If this is not passed in the query param, assume name sort.
       renderParams.sortType = req.query.sortType === undefined ? "name" : req.query.sortType;                 
