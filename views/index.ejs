@@ -31,12 +31,26 @@
 					<tr>
 						<th id="sortTableByName">
 							<a href="/?sortType=name&sortDir=<%= sortDir * -1%>">Name</a> 
-							<span id="nameSortStateCaret">*</span>
+							<% if(sortType == 'name'){ %> 
+							<span><% if(sortDir == '-1') { %> ∧
+								<% } else { %> ∨
+								<% } %> 
+							</span>
+							<% } else { %>
+							<span>*</span>
+							<% } %>
 							</th>
-						</a>
 						<th id="sortTableByGrade">
 							<a href="/?sortType=grade&sortDir=<%= sortDir * -1 %>">Grade</a> 
-							<span id="gradeSortStateCaret">*</span>
+							<% if(sortType == 'grade'){ %> 
+								<span><% if(sortDir == '1') { %> ∧
+									<% } else { %> ∨
+									<% } %> 
+								</span>
+								<% } else { %>
+								<span>*</span>
+								<% } %>
+								</th>
 						</th>
 						<th>Options</th>
 					</tr>
