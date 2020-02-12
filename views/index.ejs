@@ -19,8 +19,11 @@
 
 		<header>
 			<div id="header-setting">
-				<!-- <button onclick=""id="darkModeToggle" class="header-button-select" value="">Toggle Dark Mode</button> -->
-				<a href="/?darkMode=<%= darkMode * -1 %>&sortType=<%= sortType %>&sortDir=<%= sortDir %>">Toggle Dark Mode</a> 
+				<div class="header-button-select">
+					<a href="/?darkMode=<%= darkMode * -1 %>&sortType=<%= sortType %>&sortDir=<%= sortDir %>">
+						Toggle Dark Mode</a> 
+				</div>
+
 			</div>
 		</header>
 		<main>
@@ -68,7 +71,7 @@
 			  </td>
               <td>
 					<div class="on-edit-show">
-						<div class="">
+						<div class="is-editable">
 							<button form="studentEditForm" type="submit">Save</button>
 							<a href="/?sortType=<%= sortType %>&sortDir=<%= sortDir %>">Cancel</a>
 						</div>
@@ -104,7 +107,7 @@
 							<input form="studentSubmissionForm" name="grade" id="input-grade" type="number" min="0" max="100" placeholder="0" required="true"/>
 						</td>
 						<td>
-							<button form="studentSubmissionForm" type="submit">Add Student</button>
+							<button id="submit-new-student-btn" form="studentSubmissionForm" type="submit">Add Student</button>
 						</td>
 					</tr>
 					

@@ -6,6 +6,11 @@
   border-spacing: 0;
 }
 
+a {
+  text-decoration: none;
+  color: #000000;
+}
+
 
 /* Dark Mode Styles */
 
@@ -16,11 +21,31 @@
   background: #000000; /* Set the background color to black */
 }
 
+.darkMode a, .darkMode button{
+  color: #ffffff;     /* Set all font color to white */
+}
+
+.darkMode a:hover, .darkMode button:hover{
+  color: #bdeb74;     /* Set all font color to white */
+}
+
+.darkMode #table-grades .on-hover-show button{
+  background-color: #000000;
+}
 
 .darkMode #table-grades tr td input[type="text"], .darkMode #table-grades tr td input[type="number"]{
   background: #000000;
   color: #ffffff;     /* Set all font color to white */
 
+}
+
+
+.darkMode .header-button-select {
+  border: 1px solid #ffffff;
+}
+
+.darkMode #submit-new-student-btn{
+  background-color: #000000;     /* Set all font color to white */
 }
 
 /* Error Input Styles */
@@ -47,15 +72,15 @@
   height: 1.2em;
   padding-left: 1em;
   padding-right: 1em;
-  
+  width: 300px;
 }
 
-/* TODO: fix this */
-/* .header-button-select:active{
-  color: #ffffff;
-  margin-top: 2px;
-  background: #000000;
-} */
+.header-button-select a{
+  text-align: center;
+  position: relative;
+  display: block;
+}
+
 
 /* Main content styles */
 
@@ -99,7 +124,7 @@ h1 {
 
 
 #table-grades tr:hover{
-  background-color: #cccccc;
+  background-color: #88888880;
 }
 
 #table-grades td {
@@ -117,6 +142,7 @@ h1 {
 #table-grades .on-hover-show button{
   font-size: 1rem;
   padding: 3px;
+  background-color: #ffffff;
 }
 
 /* Dropdown content should be absent from display */
@@ -157,13 +183,36 @@ h1 {
   border: 1px dashed;
 }
 
-#table-grades .dropdown-content a:hover, #table-grades .is-editable a:hover {
-  font-weight: 900;
-  background-color: #777777;
+#table-grades .is-editable button {
+  height: 1rem;
+  display: block;
+  font-size: 1rem;    
+  border: 1px dashed;
+  position: relative;
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    background: none;
+    font-family: 'Courier New', Courier, monospace;
 }
 
-#nameSortStateCaret, #gradeSortStateCaret {
-  font-size: 0.75em;
+
+#table-grades .dropdown-content a:hover, #table-grades .is-editable a:hover, #table-grades .is-editable button:hover {
+  font-weight: 900;
+  background-color: #777777;
+  cursor: pointer;
+}
+
+
+#submit-new-student-btn{
+  height: 2em;
+    width: 75%;
+    font-size: .5em;
+}
+
+#submit-new-student-btn:hover{
+  font-weight: 900;
+  cursor: pointer;
 }
 
 
