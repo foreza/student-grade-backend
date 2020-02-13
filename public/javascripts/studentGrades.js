@@ -246,6 +246,7 @@ function view_renderStudentGradeTable(studentGradeList) {
 
 // Function that will access the table body
 function view_clearViewTable() {
+    view_setSortStateDirty();
     tbody.empty();
 }
 

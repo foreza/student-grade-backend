@@ -61,6 +61,7 @@ function sortStudentCollectionByNameDescending() {
 
     view_clearViewTable();
     model_getAllStudentDataSortedByType("name", 1);
+    view_setSortStateDirty();
     view_setNameSortStateCaretDown();
 }
 
