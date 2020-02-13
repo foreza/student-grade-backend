@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>(Basic) Student Grade Table (Thi's Tutelage)</title>
+		<meta charset="utf-8"/>
+		<meta name="description" content=""/>
+		<meta name="author" content=""/>
+		<link rel="stylesheet" href="stylesheets/style.css"/>
+	</head>
+	<body id="body-content">
+		<header>
+			<!-- TODO: Implement a toggle between Light/Dark Mode  -->
+			<div id="header-setting">
+				<button id="darkModeToggle" class="header-button-select" value="">Toggle Dark Mode</button>
+			</div>
+		</header>
+		<main>
+			<h1>Student Grades</h1>
+			<table id="table-grades">
+				<!-- Table Header -->
+				<thead>
+					<tr>
+						<th onclick="click_sortTableByName()">Name 
+							<span id="nameSortStateCaret">*</span>
+						</th>
+						<th onclick="click_sortTableByGrade()">Grade 
+							<span id="gradeSortStateCaret">*</span>
+						</th>
+						<th>Options</th>
+					</tr>
+				</thead>
+				<!-- (Sample) Table Content -->
+				<tbody>
+					<!-- Content is inserted here dynamically -->
+				</tbody>
+				<tfoot>
+					<tr>
+						<td>
+							<input id="input-name" type="text" placeholder="Name" required="true"/>
+						</td>
+						<td>
+							<input id="input-grade" type="number" min="0" max="100" placeholder="0" required="true"/>
+						</td>
+						<td>
+							<input onclick="click_attemptAddNewRow()" type="button" value="Add"/>
+						</td>
+					</tr>
+				</tfoot>
+			</table>
+		</main>
+		<footer></footer>
+		<!-- Load JS at the end of the document -->
+		<script src="javascripts/jquery-3.4.1.js"></script>
+		<script src="javascripts/darkMode.js"></script>
+		<script src="javascripts/input-validation.js"></script>
+		<script src="javascripts/sortView.js"></script>
+		<script src="javascripts/studentGrades.js"></script>
+	</body>
+</html>
