@@ -39,6 +39,10 @@ a {
 
 }
 
+.darkMode .header-button-select {
+  background-color: #000000;
+}
+
 
 .darkMode .header-button-select {
   border: 1px solid #ffffff;
