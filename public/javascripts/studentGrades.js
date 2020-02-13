@@ -588,6 +588,7 @@ function enableEditingOptionViewForStudentID(id) {
 
     // Hide options button
     $(`#${uniqueIDPrefix}options${id} .on-hover-show button`).attr('class', 'edit-content-hidden');
+    $(`#${uniqueIDPrefix}options${id} .on-hover-show div.dropdown-content`).attr('class', 'edit-content-hidden');
 
     // Show edit links
     $(`#${uniqueIDPrefix}options${id} .on-edit-show div`).attr('class', 'is-editable');
@@ -605,6 +606,8 @@ function disableEditingOptionViewForStudentID(id) {
 
     // Show the options button
     $(`#${uniqueIDPrefix}options${id} .on-hover-show button`).removeAttr('class', 'edit-content-hidden');
+    $(`#${uniqueIDPrefix}options${id} .on-hover-show div.edit-content-hidden`).attr('class', 'dropdown-content');
+
 
 }
 
