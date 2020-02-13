@@ -533,6 +533,7 @@ function enableEditingNameViewForStudentID(id) {
 
     const inputForName = $('<input></input>')
         .attr('id', `${uniqueIDPrefix}input-name${id}`)
+        .attr('maxlength', 12)
         .attr('type', "text")
         .attr('value', $(`#${uniqueIDPrefix}name${id} span`).text());
 
