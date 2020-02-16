@@ -79,7 +79,12 @@ router.get('/:id', [middleware.logger, middleware.checkMongoID], async (req, res
 
     try {
         const students = await studentUtils.retrieveStudentByUID(req.params.id);
-        res.json(students);
+        if (students != null){
+            res.json(students);
+        } else {
+            res.sendStatus(404);
+        }
+        
     } catch (err) {
         next(err)
     }
@@ -107,7 +112,11 @@ router.put('/:id', [middleware.logger, middleware.checkMongoID], async (req, res
 
     try {
         const result = await studentUtils.updateStudentWithUID(req.params.id, req.body)
-        res.json(result)        // Note: the old object is returned
+        if (result != null){
+            res.json(result)        // Note: the old object is returned
+        } else {
+            res.sendStatus(404);
+        }
     } catch (err) {
         // On error, pass it off to somebody else!
         next(err)
