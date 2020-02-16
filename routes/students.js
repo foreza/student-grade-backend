@@ -64,7 +64,7 @@ router.post('/', middleware.logger, async (req, res, next) => {
 
     try {
         const result = await studentUtils.createStudent(req.body)
-        res.json(result)
+        res.status(201).json(result)
     } catch (err) {
         // On error, pass it off to somebody else!
         next(err)

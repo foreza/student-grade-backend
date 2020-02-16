@@ -13,7 +13,7 @@ describe('Users', function() {
     await studentModel.remove({});
   });
 
-  it('Users db should be empty (2)', async function() {
+  it('TODO', async function() {
     try {
       const response = await chai.request(app).get('/students');
       assert.equal(response.body.length == 0, true, 'Results should be empty');
