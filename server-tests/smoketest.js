@@ -28,8 +28,6 @@ This smoketest shall do the following:
 - (GET)   Get user B, verify response code (404)
 - (DEL)   Delete user A, verify response code (200)
 - (GET)   Verify students database is 0, verify response code (200)
-
-
 */
 
 
@@ -158,7 +156,6 @@ describe('Users', function() {
 
   })
 
-
   it ('Modify properties of user B, verify response code (404)', async function(){
     try {
       
@@ -178,8 +175,6 @@ describe('Users', function() {
     }
   })
 
-
-
   it ('Delete user BA verify response code (200)', async function(){
 
     try {
@@ -191,7 +186,6 @@ describe('Users', function() {
 
   })
 
-
   it('Verify database is empty, verify response code (200)', async function() {
     try {
       const response = await chai.request(app).get('/students');
@@ -201,4 +195,11 @@ describe('Users', function() {
       throw err;
     }
   });
+
+  after(async function() {
+    
+    // Drop the current (local) student model database.  
+    await studentModel.deleteMany({});
+  });
+
 });

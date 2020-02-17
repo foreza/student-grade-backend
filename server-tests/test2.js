@@ -10,7 +10,7 @@ chai.use(chaiHttp);
 describe('Users', function() {
   before(async function() {
     // runs before all tests in this block
-    await studentModel.remove({});
+    await studentModel.deleteMany({});
   });
 
   it('TODO', async function() {
@@ -20,6 +20,11 @@ describe('Users', function() {
     } catch (err) {
       throw err;
     }
+  });
+
+  after(async function() {
+    // runs after all tests in this block
+    await studentModel.deleteMany({});
   });
 
 });
