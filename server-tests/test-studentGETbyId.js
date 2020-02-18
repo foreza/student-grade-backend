@@ -10,16 +10,13 @@ chai.use(chaiHttp);
 
 /*
 
-Advanced Student API test (GET)
+Advanced Student API test (GET by id)
 
 - (GET) Gets a student by a missing/invalid/badly formatted ID or some equivalent
   * Super long numeric id
   * Unexpected characters
   * Wrong route name
   * non-existent
-  * 
-
-
 */
 
 let test_user_id = "";

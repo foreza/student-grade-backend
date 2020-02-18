@@ -118,6 +118,8 @@ function model_getAllStudentDataSortedByType(sortType, sortDir) {
 
                 resolve(sortedStudentData);
 
+
+
             }).catch(error => {
                 reject(new Error('Some error happened here: ', error));
                 alert(connectionErrorString)
@@ -125,7 +127,7 @@ function model_getAllStudentDataSortedByType(sortType, sortDir) {
         }).then(data => {
             if (data != null) {
                 students = data;
-                
+                test_utility_logSortedData(data);
                 view_renderStudentGradeTable(students)
                 tFooter.css("visibility", "visible");
                 return (data);
@@ -140,6 +142,23 @@ function model_getAllStudentDataSortedByType(sortType, sortDir) {
 
 }
 
+// (TEMP) This temporary utility generates a specific JSON test string given a set of student data
+function test_utility_logSortedData(studentData) {
+
+    var formattedTestString = "[";
+    for (var i = 0; i < studentData.length; ++i){
+        formattedTestString += `{ "_id": "${studentData[i].id}", "name": "${studentData[i].name}", "grade": ${studentData[i].grade} } `
+
+        if (i != studentData.length - 1) {
+            formattedTestString += ", "
+        }
+
+    }
+
+    formattedTestString += "]"
+    // console.log(studentData);
+    console.log(formattedTestString);
+}
 
 
 // CREATE: Add a new student given a student object and POST it to the remote

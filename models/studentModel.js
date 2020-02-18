@@ -1,8 +1,10 @@
 var mongoose = require('mongoose');         // Use mongoose
-var Schema = mongoose.Schema;               // We're using a schema
-
+var Schema = mongoose.Schema;
 
 const Student = Schema({
+    _id: {
+        type: mongoose.Types.ObjectId, auto: true
+    },
     name: {
         type: String,
         required: true
@@ -10,12 +12,6 @@ const Student = Schema({
     grade: {
         type: Number,
         required: true
-    },
-    meta: {
-        created_at: {
-            type: Date,
-            default: Date.now
-        }
     }
     }
 );
