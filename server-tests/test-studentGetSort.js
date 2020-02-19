@@ -55,9 +55,7 @@ describe('Users', function() {
 
   it(`Compare sorted by name ascending`, async function() {
     try {
-      const response = await chai.request(app).get('/students/?sortType=name&sortDir=-1');  
-      console.log(`body type: ${typeof(response.body[0].grade)}`)
-      console.log(`param type: ${typeof(testParams.test_user_set_sortNameAscending[0].grade)}`)
+      const response = await chai.request(app).get('/students/?sort[]=name&dir[]=-1');  
       assert.sameDeepOrderedMembers(response.body, testParams.test_user_set_sortNameAscending, `Should mostly be equal...`)
       assert.equal(response.status, 200, 'Response should be 200');
     } catch (err) {
@@ -68,7 +66,7 @@ describe('Users', function() {
   
   it(`Compares sorted by name descending`, async function(){
     try {
-      const response = await chai.request(app).get('/students/?sortType=name&sortDir=1');
+      const response = await chai.request(app).get('/students/?sort[]=name&dir[]=1');
       assert.deepEqual(response.body, testParams.test_user_set_sortNameDescending, `Should mostly be equal...`)
       assert.equal(response.status, 200, 'Response should be 200');
     } catch (err) {

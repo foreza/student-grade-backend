@@ -1,5 +1,6 @@
 var express = require('express');
 const studentUtils = require('../db/util_students');
+var qs = require ('qs');
 var router = express.Router();
 
 
@@ -7,7 +8,7 @@ var router = express.Router();
 router.post('/', async (req, res, next) => {
 
   try {
-    const result = await studentUtils.createStudent(req.body)
+    await studentUtils.createStudent(req.body)
     res.redirect(util_generateRedirectStringFromReq(req))
 } catch (err) {
     next(err)
@@ -57,8 +58,12 @@ router.get('/', async (req, res, next) => {
       "editableId": null,
       "sortType": null,
       "sortDir": null,
+      "sortObj": null,
       "darkMode": 1           // Let the page know intended darkMode state. -1 for darkMode off, 1 for on.
     }
+
+   
+
 
     try {
 
@@ -73,7 +78,37 @@ router.get('/', async (req, res, next) => {
 
         // sortDirection is either -1 or 1. If this is not passed in the query param, assume 1.
 
-        // Populate the students collection with the appropriate sort
+        
+
+      // WIP: Nested Sort implementation hook into main API
+      // Sample test: http://localhost:3000/?sort[]=name,grade&dir[]=-1,-1
+
+      renderParams.sortObj = [];               // Define a sortObj that we will pass to the DB
+
+      let sortString = qs.parse(req.query, { comma: true });
+      if (sortString.sort != undefined && sortString.dir != undefined) {
+        sortTypes = (sortString.sort[0]).split(",");
+        sortDir = (sortString.dir[0]).split(",");
+
+        for (var i = 0; i < sortTypes.length; ++i) {
+          // sortTypes can be either "name" or "grade". If this is not passed in the query param, assume name sort.
+          let tSort = sortTypes[i] === undefined ? "name" : sortTypes[i];   
+          let tDir = sortDir[i] === undefined ? "1" : Math.sign(sortDir[i]);        // Cast it down to -1 or 1. -1 for ascend, +1 for descend
+          let sortParam = [tSort,tDir];
+    
+          renderParams.sortObj.push(sortParam);
+        }
+      }
+
+        if (renderParams.sortObj.length > 0){
+          // v2 sort - nested sort (only through API presently)
+          console.warn('Using v2 (nested sort) as sortObj params are provided')
+          renderParams.students = await studentUtils.listAllStudentsAndSort(renderParams.sortObj);          
+
+        } else {
+            // v1 sort - basic simple sort
+            console.warn('Using v1 (basic sort)');
+            // Populate the students collection with the appropriate sort
         switch (renderParams.sortType) {
           case "name":
             renderParams.students = await studentUtils.listAllStudentsSortedByName(renderParams.sortDir);
@@ -84,6 +119,10 @@ router.get('/', async (req, res, next) => {
           default:
             renderParams.students = await studentUtils.listAllStudentsDefaultSorted();
         }
+
+        }
+
+      
 
 
 

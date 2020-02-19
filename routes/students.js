@@ -1,44 +1,51 @@
 const router = require('express').Router();
 const studentUtils = require('../db/util_students');
 const middleware = require('../middleware/collection')
+var qs = require ('qs');
+
 
 
 // GET: List all students in given sort order provided via query param
 router.get('/', middleware.logger, async (req, res, next) => {
 
+    // Check to make sure we have some query params (basic check)
     if (Object.keys(req.query).length > 1) {
+
         try {
-            let sortType = req.query.sortType;
-            let sortDir = Math.sign(req.query.sortDir);     // Cast it down to -1 or 1. -1 for ascend, +1 for descend
 
-            switch (sortType) {
+            // TODO: Abstract this into a middleware to use in both index and students
 
-                case 'name': {
-                    const students = await studentUtils.listAllStudentsSortedByName(sortDir);
-                    res.json(students);
-                    break;
-                }
+            // Define a sortObj that we will pass to the DB
+            let sortObj = [];               
 
-                case 'grade': {
-                    const students = await studentUtils.listAllStudentsSortedByGrade(sortDir);
-                    res.json(students);
-                    break;
-                }
+            let sortString = qs.parse(req.query, { comma: true });
 
-                default:
-                    // If we don't match any of the supported sort types, pass to the default handler
-                    next();
+            if (sortString.sort != undefined && sortString.dir != undefined) {
+
+              // If these params are both passed, get them and store them
+              sortTypes = (sortString.sort[0]).split(",");
+              sortDir = (sortString.dir[0]).split(",");
+      
+              for (var i = 0; i < sortTypes.length; ++i) {
+
+                let tSort = sortTypes[i] === undefined ? "name" : sortTypes[i];   
+                let tDir = sortDir[i] === undefined ? "1" : Math.sign(sortDir[i]);        // Cast it down to -1 or 1. -1 for ascend, +1 for descend
+                let sortParam = [tSort,tDir];
+                sortObj.push(sortParam);
+              }
             }
-
+      
+            const students = await studentUtils.listAllStudentsAndSort(sortObj);  
+            res.json(students);
+        
         } catch (err) {
-            // On error, pass it off to default error handler
             next(err);
         }
+ 
     } else {
         // If we don't have more than 1 query param, assume default list sort
         next();
     }
-
 
 })
 

@@ -2,17 +2,24 @@ const studentModel =  require('../models/studentModel');        // Get our stude
 const studentModelUtilities = {};                               // We'll define our utilities and add them to this collection
 
 
-// Return the mongoose method to find all student items
+// [TODO] Will deprecate: Used by v1 sort (ejs)
 studentModelUtilities.listAllStudentsDefaultSorted = () => {
     return studentModel.find().sort({name:1});    // TODO: What if we have too many students??
 }
 
+// [TODO] Will deprecate: Used by v1 sort (ejs)
 studentModelUtilities.listAllStudentsSortedByName = (dir) => {
     return studentModel.find().sort({name: dir});    
 }
 
+// [TODO] Will deprecate: Used by v1 sort (ejs)
 studentModelUtilities.listAllStudentsSortedByGrade = (dir) => {
     return studentModel.find().sort({grade: dir});    
+}
+
+// Used by v2 sort (API and tests will call this)
+studentModelUtilities.listAllStudentsAndSort = (obj) => {
+    return studentModel.find().sort(obj);
 }
 
 // Return the mongoose method to find all student items
