@@ -2,21 +2,19 @@ const router = require('express').Router();
 const studentUtils = require('../db/util_students');
 const middleware = require('../middleware/collection')
 var qs = require ('qs');
-
+const StudentModel = require('../models/studentModel');
 
 
 // GET: List all students in given sort order provided via query param
 router.get('/', middleware.logger, async (req, res, next) => {
 
-    // Check to make sure we have some query params (basic check)
-    if (Object.keys(req.query).length > 1) {
 
         try {
 
             // TODO: Abstract this into a middleware to use in both index and students
 
             // Define a sortObj that we will pass to the DB
-            let sortObj = [];               
+            let sortObj = [];
 
             let sortString = qs.parse(req.query, { comma: true });
 
@@ -25,48 +23,27 @@ router.get('/', middleware.logger, async (req, res, next) => {
               // If these params are both passed, get them and store them
               sortTypes = (sortString.sort[0]).split(",");
               sortDir = (sortString.dir[0]).split(",");
-      
+
               for (var i = 0; i < sortTypes.length; ++i) {
 
-                let tSort = sortTypes[i] === undefined ? "name" : sortTypes[i];   
+                let tSort = sortTypes[i] === undefined ? "name" : sortTypes[i];
                 let tDir = sortDir[i] === undefined ? "1" : Math.sign(sortDir[i]);        // Cast it down to -1 or 1. -1 for ascend, +1 for descend
                 let sortParam = [tSort,tDir];
                 sortObj.push(sortParam);
               }
             }
-      
-            const students = await studentUtils.listAllStudentsAndSort(sortObj);  
+
+            const students = await StudentModel.Get({}, sortObj);
+            // const students = await studentUtils.listAllStudentsAndSort(sortObj);
             res.json(students);
-        
+
         } catch (err) {
             next(err);
         }
- 
-    } else {
-        // If we don't have more than 1 query param, assume default list sort
-        next();
-    }
 
 })
 
-
-
-// GET: If no query params passed, do sort name descending
-router.get('/', middleware.logger, async (req, res, next) => {
-
-    try {
-        const students = await studentUtils.listAllStudentsDefaultSorted();
-        res.json(students);
-    } catch (err) {
-        // On error, pass it off to somebody else!
-        next(err)
-    }
-
-})
-
-
-
-// POST: Add new student 
+// POST: Add new student
 router.post('/', middleware.logger, async (req, res, next) => {
 
     try {
@@ -91,7 +68,7 @@ router.get('/:id', [middleware.logger, middleware.checkMongoID], async (req, res
         } else {
             res.sendStatus(404);
         }
-        
+
     } catch (err) {
         next(err)
     }

@@ -16,5 +16,9 @@ const Student = Schema({
     }
 );
 
+Student.statics.Get = function(where = {}, sort = {}) {
+    return this.find(where).sort(sort);
+}
+
 // Export the module
 module.exports = mongoose.model('Student', Student);
