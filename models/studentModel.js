@@ -12,7 +12,8 @@ const Student = Schema({
     grade: {
         type: Number,
         required: true
-    }
+    }, 
+    versionKey: false 
     }
 );
 

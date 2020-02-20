@@ -46,7 +46,7 @@ describe('Users', function() {
   it(`Get all ${testParams.test_user_set.length} users after test setup`, async function() {
     try {
       const response = await chai.request(app).get('/students');
-      assert.equal(response.body.length == testParams.test_user_set.length, true, `Should have ${testParams.test_user_set.length}`);
+      assert.equal(response.body.length === testParams.test_user_set.length, true, `Should have ${testParams.test_user_set.length}`);
       assert.equal(response.status, 200, 'Response should be 200');
     } catch (err) {
       throw err;

@@ -54,7 +54,7 @@ router.get('/', async (req, res, next) => {
      // Make a render params object to be utilized. Set default values
      let renderParams = {
       "title": 'Advanced!',
-      "students": null,         // Store the returned / sorted students collection
+      "students": [],         // Store the returned / sorted students collection
       "editableId": null,
       "sortType": null,
       "sortDir": null,
@@ -93,10 +93,14 @@ router.get('/', async (req, res, next) => {
         for (var i = 0; i < sortTypes.length; ++i) {
           // sortTypes can be either "name" or "grade". If this is not passed in the query param, assume name sort.
           let tSort = sortTypes[i] === undefined ? "name" : sortTypes[i];   
-          let tDir = sortDir[i] === undefined ? "1" : Math.sign(sortDir[i]);        // Cast it down to -1 or 1. -1 for ascend, +1 for descend
+          let tDir = sortDir[i] === undefined ? "1" : Math.sign(sortDir[i]); ß
           let sortParam = [tSort,tDir];
-    
+          
+          sortParam[tSort] = tDir;
+
           renderParams.sortObj.push(sortParam);
+
+
         }
       }
 
