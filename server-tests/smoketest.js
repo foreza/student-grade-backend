@@ -32,49 +32,47 @@ This smoketest shall do the following:
 */
 
 
-// Test params
-
-describe('Users', function() {
-  before(async function() {
+describe('Users', function () {
+  before(async function () {
     await studentModel.deleteMany({});
   });
 
-  it('Verify database is empty, verify response code (200)', async function() {
+  it('Verify database is empty, verify response code (200)', async function () {
     try {
       const response = await chai.request(app).get('/students');
       assert.equal(response.body.length == 0, true, 'Results should be empty');
       assert.equal(response.status, 200, 'Response should be 200');
-      // TODO: Test header
+      // TODO: Test headers
     } catch (err) {
       throw err;
     }
   });
 
-  it ('Add a user (A), verify user A returns, verify response code (201)', async function() {
+  it('Add a user (A), verify user A returns, verify response code (201)', async function () {
 
     try {
       const response = await chai.request(app).post('/students').send(testParams.validUsers.test_user_1);
       assert.ownInclude(response.body, testParams.validUsers.test_user_1, 'UserA should be returned in response');
       assert.equal(response.status, 201, 'Response should be 201');
-    } catch (err){
+    } catch (err) {
       throw err;
     }
 
   })
 
-  it ('Add a second user (B), verify user A is not returned, verify response code (201)', async function() {
+  it('Add a second user (B), verify user A is not returned, verify response code (201)', async function () {
 
     try {
       const response = await chai.request(app).post('/students').send(testParams.validUsers.test_user_2);
       assert.notOwnInclude(response.body, testParams.validUsers.test_user_1, 'UserA should NOT be returned in response');
       assert.equal(response.status, 201, 'Response should be 201');
-    } catch (err){
+    } catch (err) {
       throw err;
     }
 
   })
 
-  it ('Get user A, verify user A is returned, verify response code (200)', async function(){
+  it('Get user A, verify user A is returned, verify response code (200)', async function () {
 
     try {
       const response = await chai.request(app).get(`/students/${testParams.validUsers.test_user_1._id}`);
@@ -86,7 +84,7 @@ describe('Users', function() {
 
   })
 
-  it ('Get nonexistent user by id, verify response code (400)', async function(){
+  it('Get nonexistent user by id, verify response code (400)', async function () {
 
     try {
       const response = await chai.request(app).get(`/students/0000000000000`);
@@ -97,31 +95,31 @@ describe('Users', function() {
 
   })
 
-  it ('Verify that database contains 2 users, verify response code (200)', async function(){
+  it('Verify that database contains 2 users, verify response code (200)', async function () {
 
     try {
       const response = await chai.request(app).get('/students');
       assert.equal(response.body.length === Object.keys(testParams.validUsers).length, true, 'Results should be 2 users');
       assert.equal(response.status, 200, 'Response should be 200');
     } catch (err) {
-      throw(err);
+      throw (err);
     }
 
   })
 
-  it ('Modify properties of user A, verify response code (200)', async function(){
+  it('Modify properties of user A, verify response code (200)', async function () {
     try {
-        
+
       const response = await chai.request(app).put(`/students/${testParams.validUsers.test_user_1._id}`).send(testParams.modifiedUsers.test_user_1);
       assert.ownInclude(response.body, testParams.validUsers.test_user_1, 'User 1 should be returned');
       assert.equal(response.status, 200, 'Response should be 200');
 
-    } catch (err){
+    } catch (err) {
       throw (err)
     }
   })
 
-  it ('Verify property update of user A, verify response code (200)', async function(){
+  it('Verify property update of user A, verify response code (200)', async function () {
 
     try {
       const response = await chai.request(app).get(`/students/${testParams.validUsers.test_user_1._id}`);
@@ -134,7 +132,7 @@ describe('Users', function() {
 
   })
 
-  it ('Delete user B, verify response code (200)', async function(){
+  it('Delete user B, verify response code (200)', async function () {
 
     try {
       const response = await chai.request(app).delete(`/students/${testParams.validUsers.test_user_2._id}`);
@@ -145,17 +143,17 @@ describe('Users', function() {
 
   })
 
-  it ('Modify properties of user B, verify response code (404)', async function(){
+  it('Modify properties of user B, verify response code (404)', async function () {
     try {
-      
+
       const response = await chai.request(app).put(`/students/${testParams.validUsers.test_user_2._id}`).send(testParams.validUsers.test_user_2);
       assert.equal(response.status, 404, 'Response should be 404');   // TODO: should this be sending a 404 or not? 
-    } catch (err){
+    } catch (err) {
       throw (err)
     }
   })
 
-  it ('Get user B, verify response code (400)', async function() {
+  it('Get user B, verify response code (400)', async function () {
     try {
       const response = await chai.request(app).get(`/students/${testParams.validUsers.test_user_2._id}`);
       assert.equal(response.status, 400, 'Response should be 400');
@@ -164,7 +162,7 @@ describe('Users', function() {
     }
   })
 
-  it ('Delete user B, verify response code (200)', async function(){
+  it('Delete user B, verify response code (200)', async function () {
 
     try {
       const response = await chai.request(app).delete(`/students/${testParams.validUsers.test_user_1._id}`);
@@ -175,7 +173,7 @@ describe('Users', function() {
 
   })
 
-  it('Verify database is empty, verify response code (200)', async function() {
+  it('Verify database is empty, verify response code (200)', async function () {
     try {
       const response = await chai.request(app).get('/students');
       assert.equal(response.body.length == 0, true, 'Results should be empty');
@@ -185,9 +183,7 @@ describe('Users', function() {
     }
   });
 
-  after(async function() {
-    
-    // Drop the current (local) student model database.  
+  after(async function () {
     await studentModel.deleteMany({});
   });
 
