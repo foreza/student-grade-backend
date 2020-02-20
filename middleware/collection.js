@@ -15,7 +15,7 @@ middlewareCollection.checkMongoID = function (req, res, next) {
         next()
     } else {
         console.error(`Received bad mongo id in request`)
-        res.sendStatus(404);
+        res.sendStatus(400);
     }
 }
 

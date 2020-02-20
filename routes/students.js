@@ -89,7 +89,7 @@ router.get('/:id', [middleware.logger, middleware.checkMongoID], async (req, res
         if (students != null){
             res.json(students);
         } else {
-            res.sendStatus(404);
+            res.sendStatus(400);
         }
         
     } catch (err) {
