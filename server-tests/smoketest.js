@@ -40,7 +40,7 @@ describe('Users', function () {
   it('Verify database is empty, verify response code (200)', async function () {
     try {
       const response = await chai.request(app).get('/students');
-      assert.equal(response.body.length == 0, true, 'Results should be empty');
+      assert.equal(response.body.length === 0, true, 'Results should be empty');
       assert.equal(response.status, 200, 'Response should be 200');
       // TODO: Test headers
     } catch (err) {
@@ -176,7 +176,7 @@ describe('Users', function () {
   it('Verify database is empty, verify response code (200)', async function () {
     try {
       const response = await chai.request(app).get('/students');
-      assert.equal(response.body.length == 0, true, 'Results should be empty');
+      assert.equal(response.body.length === 0, true, 'Results should be empty');
       assert.equal(response.status, 200, 'Response should be 200');
     } catch (err) {
       throw err;

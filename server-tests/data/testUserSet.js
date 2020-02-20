@@ -29,7 +29,11 @@ validUsers.test_user_2 = {
 
 const invalidUsers = {};
 
-invalidUsers.test_user_invalid_1 = { grade: 50 };                               // Invalid due to missing 'name' param
+ // Invalid due to missing 'name' param
+invalidUsers.test_user_invalid_1 = { 
+    grade: 50 
+};                              
+
 invalidUsers.test_user_invalid_2 = { invalid: "ignore me" };                    // Invalid due to missing both params and including wrong param
 invalidUsers.test_user_invalid_3 = { name: "gotYourConk!", grade: "heh" };      // Invalid due to name incorrect type
 
