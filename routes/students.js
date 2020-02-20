@@ -8,9 +8,6 @@ var qs = require ('qs');
 // GET: List all students in given sort order provided via query param
 router.get('/', middleware.logger, async (req, res, next) => {
 
-    // Check to make sure we have some query params (basic check)
-    if (Object.keys(req.query).length > 1) {
-
         try {
 
             // TODO: Abstract this into a middleware to use in both index and students
@@ -41,26 +38,7 @@ router.get('/', middleware.logger, async (req, res, next) => {
         } catch (err) {
             next(err);
         }
- 
-    } else {
-        // If we don't have more than 1 query param, assume default list sort
-        next();
-    }
 
-})
-
-
-
-// GET: If no query params passed, do sort name descending
-router.get('/', middleware.logger, async (req, res, next) => {
-
-    try {
-        const students = await studentUtils.listAllStudentsDefaultSorted();
-        res.json(students);
-    } catch (err) {
-        // On error, pass it off to somebody else!
-        next(err)
-    }
 
 })
 
