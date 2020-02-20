@@ -40,16 +40,86 @@ describe('Users', function () {
 
     })
 
-    it('Add an invalid user 1, verify response code (400)', async function () {
+    for (let i = 0; i < Object.keys(testParams.invalidUsers).length; ++i) {
+        it(`Add invalid user ${i} , verify response code (400)`, async function () {
 
-        try {
-            const response = await chai.request(app).post('/students').send(testParams.invalidUsers.test_user_1);
-            assert.equal(response.status, 400, 'Response should be 400');
-        } catch (err) {
-            throw err;
-        }
+            console.log(testParams.invalidUsers[`test_user_invalid_${i}`]);
 
-    })
+            try {
+                const response = await chai.request(app).post('/students').send(testParams.invalidUsers[`test_user_invalid_${i}`]);
+                assert.equal(response.status, 400, 'Response should be 400');
+            } catch (err) {
+                throw err;
+            }
+    
+        })
+    }
+
+    // it('Add invalid user 0, verify response code (400)', async function () {
+
+    //     try {
+    //         const response = await chai.request(app).post('/students').send(testParams.invalidUsers.test_user_invalid_0);
+    //         assert.equal(response.status, 400, 'Response should be 400');
+    //     } catch (err) {
+    //         throw err;
+    //     }
+
+    // })
+
+    // it('Add invalid user 1, verify response code (400)', async function () {
+
+    //     try {
+    //         const response = await chai.request(app).post('/students').send(testParams.invalidUsers.test_user_invalid_1);
+    //         assert.equal(response.status, 400, 'Response should be 400');
+    //     } catch (err) {
+    //         throw err;
+    //     }
+
+    // })
+
+    // it('Add invalid user 2, verify response code (400)', async function () {
+
+    //     try {
+    //         const response = await chai.request(app).post('/students').send(testParams.invalidUsers.test_user_invalid_2);
+    //         assert.equal(response.status, 400, 'Response should be 400');
+    //     } catch (err) {
+    //         throw err;
+    //     }
+
+    // })
+
+    // it('Add invalid user 3, verify response code (400)', async function () {
+
+    //     try {
+    //         const response = await chai.request(app).post('/students').send(testParams.invalidUsers.test_user_invalid_3);
+    //         assert.equal(response.status, 400, 'Response should be 400');
+    //     } catch (err) {
+    //         throw err;
+    //     }
+
+    // })
+
+    // it('Add invalid user 4, verify response code (400)', async function () {
+
+    //     try {
+    //         const response = await chai.request(app).post('/students').send(testParams.invalidUsers.test_user_invalid_4);
+    //         assert.equal(response.status, 400, 'Response should be 400');
+    //     } catch (err) {
+    //         throw err;
+    //     }
+
+    // })
+
+    // it('Add invalid user 5, verify response code (400)', async function () {
+
+    //     try {
+    //         const response = await chai.request(app).post('/students').send(testParams.invalidUsers.test_user_invalid_4);
+    //         assert.equal(response.status, 400, 'Response should be 400');
+    //     } catch (err) {
+    //         throw err;
+    //     }
+
+    // })
 
     after(async function () {
         await studentModel.deleteMany({});

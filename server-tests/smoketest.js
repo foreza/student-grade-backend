@@ -51,8 +51,8 @@ describe('Users', function () {
   it('Add a user (A), verify user A returns, verify response code (201)', async function () {
 
     try {
-      const response = await chai.request(app).post('/students').send(testParams.validUsers.test_user_1);
-      assert.ownInclude(response.body, testParams.validUsers.test_user_1, 'UserA should be returned in response');
+      const response = await chai.request(app).post('/students').send(testParams.smokeTestUsers.test_user_1);
+      assert.ownInclude(response.body, testParams.smokeTestUsers.test_user_1, 'UserA should be returned in response');
       assert.equal(response.status, 201, 'Response should be 201');
     } catch (err) {
       throw err;
@@ -63,8 +63,8 @@ describe('Users', function () {
   it('Add a second user (B), verify user A is not returned, verify response code (201)', async function () {
 
     try {
-      const response = await chai.request(app).post('/students').send(testParams.validUsers.test_user_2);
-      assert.notOwnInclude(response.body, testParams.validUsers.test_user_1, 'UserA should NOT be returned in response');
+      const response = await chai.request(app).post('/students').send(testParams.smokeTestUsers.test_user_2);
+      assert.notOwnInclude(response.body, testParams.smokeTestUsers.test_user_1, 'UserA should NOT be returned in response');
       assert.equal(response.status, 201, 'Response should be 201');
     } catch (err) {
       throw err;
@@ -75,8 +75,8 @@ describe('Users', function () {
   it('Get user A, verify user A is returned, verify response code (200)', async function () {
 
     try {
-      const response = await chai.request(app).get(`/students/${testParams.validUsers.test_user_1._id}`);
-      assert.ownInclude(response.body, testParams.validUsers.test_user_1, `${testParams.validUsers.test_user_1.name} should be returned in response`);
+      const response = await chai.request(app).get(`/students/${testParams.smokeTestUsers.test_user_1._id}`);
+      assert.ownInclude(response.body, testParams.smokeTestUsers.test_user_1, `${testParams.smokeTestUsers.test_user_1.name} should be returned in response`);
       assert.equal(response.status, 200, 'Response should be 200');
     } catch (err) {
       throw err;
@@ -95,11 +95,11 @@ describe('Users', function () {
 
   })
 
-  it('Verify that database contains 2 users, verify response code (200)', async function () {
+  it('Verify that database contains users, verify response code (200)', async function () {
 
     try {
       const response = await chai.request(app).get('/students');
-      assert.equal(response.body.length === Object.keys(testParams.validUsers).length, true, 'Results should be 2 users');
+      assert.equal(response.body.length === Object.keys(testParams.smokeTestUsers).length, true, 'Results should be 2 users');
       assert.equal(response.status, 200, 'Response should be 200');
     } catch (err) {
       throw (err);
@@ -110,8 +110,8 @@ describe('Users', function () {
   it('Modify properties of user A, verify response code (200)', async function () {
     try {
 
-      const response = await chai.request(app).put(`/students/${testParams.validUsers.test_user_1._id}`).send(testParams.modifiedUsers.test_user_1);
-      assert.ownInclude(response.body, testParams.validUsers.test_user_1, 'User 1 should be returned');
+      const response = await chai.request(app).put(`/students/${testParams.smokeTestUsers.test_user_1._id}`).send(testParams.modifiedUsers.test_user_1);
+      assert.ownInclude(response.body, testParams.smokeTestUsers.test_user_1, 'User 1 should be returned');
       assert.equal(response.status, 200, 'Response should be 200');
 
     } catch (err) {
@@ -122,8 +122,8 @@ describe('Users', function () {
   it('Verify property update of user A, verify response code (200)', async function () {
 
     try {
-      const response = await chai.request(app).get(`/students/${testParams.validUsers.test_user_1._id}`);
-      assert.notOwnInclude(response.body, testParams.validUsers.test_user_1, 'User 1 should not be returned in response');
+      const response = await chai.request(app).get(`/students/${testParams.smokeTestUsers.test_user_1._id}`);
+      assert.notOwnInclude(response.body, testParams.smokeTestUsers.test_user_1, 'User 1 should not be returned in response');
       assert.ownInclude(response.body, testParams.modifiedUsers.test_user_1, 'Modified User 1 should be returned in response');
       assert.equal(response.status, 200, 'Response should be 200');
     } catch (err) {
@@ -135,7 +135,7 @@ describe('Users', function () {
   it('Delete user B, verify response code (200)', async function () {
 
     try {
-      const response = await chai.request(app).delete(`/students/${testParams.validUsers.test_user_2._id}`);
+      const response = await chai.request(app).delete(`/students/${testParams.smokeTestUsers.test_user_2._id}`);
       assert.equal(response.status, 200, 'Response should be 200');
     } catch (err) {
       throw err;
@@ -146,7 +146,7 @@ describe('Users', function () {
   it('Modify properties of user B, verify response code (404)', async function () {
     try {
 
-      const response = await chai.request(app).put(`/students/${testParams.validUsers.test_user_2._id}`).send(testParams.validUsers.test_user_2);
+      const response = await chai.request(app).put(`/students/${testParams.smokeTestUsers.test_user_2._id}`).send(testParams.smokeTestUsers.test_user_2);
       assert.equal(response.status, 404, 'Response should be 404');   // TODO: should this be sending a 404 or not? 
     } catch (err) {
       throw (err)
@@ -155,7 +155,7 @@ describe('Users', function () {
 
   it('Get user B, verify response code (400)', async function () {
     try {
-      const response = await chai.request(app).get(`/students/${testParams.validUsers.test_user_2._id}`);
+      const response = await chai.request(app).get(`/students/${testParams.smokeTestUsers.test_user_2._id}`);
       assert.equal(response.status, 400, 'Response should be 400');
     } catch (err) {
       throw (err)
@@ -165,7 +165,7 @@ describe('Users', function () {
   it('Delete user B, verify response code (200)', async function () {
 
     try {
-      const response = await chai.request(app).delete(`/students/${testParams.validUsers.test_user_1._id}`);
+      const response = await chai.request(app).delete(`/students/${testParams.smokeTestUsers.test_user_1._id}`);
       assert.equal(response.status, 200, 'Response should be 200');
     } catch (err) {
       throw err;

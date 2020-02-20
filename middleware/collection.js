@@ -7,9 +7,30 @@ middlewareCollection.logger = function (req, res, next) {
 }
 
 
-middlewareCollection.checkRequestParam = function(req, res, next) {
+middlewareCollection.checkGradeRequestParam = function(req, res, next) {
 
-    if (req.body.name && req.body.grade) {
+    const gradeParam = req.body.grade;
+
+    if (gradeParam != undefined 
+        && (typeof(gradeParam) === 'number')
+        && gradeParam <= 100
+        && gradeParam >= 0) {
+        next()
+    } else {
+        res.sendStatus(400);
+    }
+
+}
+
+
+middlewareCollection.checkNameRequestParam = function(req, res, next) {
+
+    const nameParam = req.body.name;
+
+    if (nameParam 
+        && (typeof(nameParam) === 'string')
+        && nameParam.length > 0
+        && nameParam.length <= 12) {
         next()
     } else {
         res.sendStatus(400);

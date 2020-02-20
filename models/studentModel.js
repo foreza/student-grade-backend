@@ -7,11 +7,16 @@ const Student = Schema({
     },
     name: {
         type: String,
-        required: true
+        required: true,
+        trim: true,
+        maxlength: [12, 'Name too long'],
+        minlength: [1, 'Name too short']
     },
     grade: {
         type: Number,
-        required: true
+        required: true,
+        min: [0, 'Number too low'],
+        max: [100, 'Number too high']
     }, 
     versionKey: false 
     }

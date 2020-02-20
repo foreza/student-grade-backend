@@ -67,7 +67,7 @@ router.get('/', middleware.logger, async (req, res, next) => {
 
 
 // POST: Add new student 
-router.post('/', [middleware.logger, middleware.checkRequestParam], async (req, res, next) => {
+router.post('/', [middleware.logger, middleware.checkGradeRequestParam, middleware.checkNameRequestParam], async (req, res, next) => {
     try {
             const result = await studentUtils.createStudent(req.body)
             res.status(201).json(result)
