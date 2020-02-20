@@ -4,7 +4,7 @@ const assert = require('chai').assert;
 const app = require('../app');
 
 const studentModel = require('../models/studentModel');
-const testParams = require('./testSortUserSet');
+const testParams = require('./data/testSortUserSet');
 
 chai.use(chaiHttp);
 
