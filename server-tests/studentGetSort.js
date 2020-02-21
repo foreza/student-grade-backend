@@ -30,12 +30,12 @@ Advanced Student API test (GET/Sort)
   * [Nested] Compares sorted by grade descending, then name descending
 */
 
-describe('Users', function() {
-  before(async function() {
+describe('Users', function () {
+  before(async function () {
     // runs before all tests in this block
 
     // Delete all students, add test student collection
-    await studentModel.deleteMany({}).then(async function(){
+    await studentModel.deleteMany({}).then(async function () {
       try {
         await studentModel.collection.insertMany(testParams.test_user_set);
       } catch (err) {
@@ -45,7 +45,7 @@ describe('Users', function() {
     });
   });
 
-  it(`Get all ${testParams.test_user_set.length} users after test setup`, async function() {
+  it(`Get all ${testParams.test_user_set.length} users after test setup`, async function () {
     try {
       const response = await chai.request(app).get('/students');
 
@@ -57,9 +57,9 @@ describe('Users', function() {
     }
   });
 
-  it(`Compare sorted by name ascending`, async function() {
+  it(`Compare sorted by name ascending`, async function () {
     try {
-      const response = await chai.request(app).get('/students/?sort[]=name&dir[]=-1');  
+      const response = await chai.request(app).get('/students/?sort[]=name&dir[]=-1');
       assert.sameDeepOrderedMembers(response.body, testParams.test_user_set_sortNameAscending, `Should mostly be equal...`)
       assert.equal(response.status, 200, 'Response should be 200');
     } catch (err) {
@@ -67,8 +67,8 @@ describe('Users', function() {
     }
   });
 
-  
-  it(`Compares sorted by name descending`, async function(){
+
+  it(`Compares sorted by name descending`, async function () {
     try {
       const response = await chai.request(app).get('/students/?sort[]=name&dir[]=1');
       assert.deepEqual(response.body, testParams.test_user_set_sortNameDescending, `Should mostly be equal...`)
@@ -78,7 +78,7 @@ describe('Users', function() {
     }
 
   })
-  it(`Compares sorted by grade ascending`, async function(){
+  it(`Compares sorted by grade ascending`, async function () {
     try {
       const response = await chai.request(app).get('/students');
       // TODO: Implement
@@ -88,7 +88,7 @@ describe('Users', function() {
     }
 
   })
-  it(`Compares sorted by grade descending`, async function(){
+  it(`Compares sorted by grade descending`, async function () {
     try {
       const response = await chai.request(app).get('/students');
       // TODO: Implement
@@ -98,7 +98,7 @@ describe('Users', function() {
     }
 
   })
-  it(`Compares sorted by name ascending, then grade ascending`, async function(){
+  it(`Compares sorted by name ascending, then grade ascending`, async function () {
     try {
       const response = await chai.request(app).get('/students');
       // TODO: Implement
@@ -108,7 +108,7 @@ describe('Users', function() {
     }
 
   })
-  it(`Compares sorted by name ascending, then grade descending`, async function(){
+  it(`Compares sorted by name ascending, then grade descending`, async function () {
     try {
       const response = await chai.request(app).get('/students');
       // TODO: Implement
@@ -118,7 +118,7 @@ describe('Users', function() {
     }
 
   })
-  it(`Compares sorted by name descending, then grade ascending`, async function(){
+  it(`Compares sorted by name descending, then grade ascending`, async function () {
     try {
       const response = await chai.request(app).get('/students');
       // TODO: Implement
@@ -128,7 +128,7 @@ describe('Users', function() {
     }
 
   })
-  it(`Compares sorted by name descending, then grade descending`, async function(){
+  it(`Compares sorted by name descending, then grade descending`, async function () {
     try {
       const response = await chai.request(app).get('/students');
       // TODO: Implement
@@ -138,7 +138,7 @@ describe('Users', function() {
     }
 
   })
-  it(`Compares sorted by grade ascending, then name ascending`, async function(){
+  it(`Compares sorted by grade ascending, then name ascending`, async function () {
     try {
       const response = await chai.request(app).get('/students');
       // TODO: Implement
@@ -148,7 +148,7 @@ describe('Users', function() {
     }
 
   })
-  it(`Compares sorted by grade ascending, then name descending`, async function(){
+  it(`Compares sorted by grade ascending, then name descending`, async function () {
     try {
       const response = await chai.request(app).get('/students');
       // TODO: Implement
@@ -158,7 +158,7 @@ describe('Users', function() {
     }
 
   })
-  it(`Compares sorted by grade descending, then name ascending`, async function(){
+  it(`Compares sorted by grade descending, then name ascending`, async function () {
     try {
       const response = await chai.request(app).get('/students');
       // TODO: Implement
@@ -168,7 +168,7 @@ describe('Users', function() {
     }
 
   })
-  it(`Compares sorted by grade descending, then name descending`, async function(){
+  it(`Compares sorted by grade descending, then name descending`, async function () {
     try {
       const response = await chai.request(app).get('/students');
       // TODO: Implement
@@ -178,9 +178,9 @@ describe('Users', function() {
     }
 
   })
-  
 
-  after(async function() {
+
+  after(async function () {
     // runs after all tests in this block
     // await studentModel.deleteMany({});
   });
