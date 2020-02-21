@@ -31,8 +31,8 @@ describe('Users', function () {
     it('Add a user (A), verify user A returns, verify response code (201)', async function () {
 
         try {
-            const response = await chai.request(app).post('/students').send(testParams.validUsers.test_user_1);
-            assert.ownInclude(response.body, testParams.validUsers.test_user_1, 'UserA should be returned in response');
+            const response = await chai.request(app).post('/students').send(testParams.validUsers.test_user_0);
+            assert.ownInclude(response.body, testParams.validUsers.test_user_0, 'UserA should be returned in response');
             assert.equal(response.status, 201, 'Response should be 201');
         } catch (err) {
             throw err;

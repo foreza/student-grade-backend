@@ -1,15 +1,23 @@
 
+const id_array = [
+    "5e4b28f32411805f4dc85809",
+    "5e4b28f32411805f4dc85808",
+    "5e4b28f32411805f4dc85807",
+    "5e4b28f32411805f4dc85806",
+    "5e4b28f32411805f4dc85805",
+    "5e4b28f32411805f4dc85804"
+]
 
 const smokeTestUsers = {};
 
-smokeTestUsers.test_user_1 = {
-    _id: "5e4b28f32411805f4dc85809",
+smokeTestUsers.test_user_0 = {
+    _id: id_array[0],
     name: 'Jason Chiu',
     grade: 1
 };
 
-smokeTestUsers.test_user_2 = {
-    _id: "5e4b28f32411805f4dc85808",
+smokeTestUsers.test_user_1 = {
+    _id: id_array[1],
     name: 'Yvonne Yuan',
     grade: 99
 };
@@ -17,38 +25,63 @@ smokeTestUsers.test_user_2 = {
 
 const modifiedUsers = {};
 
-modifiedUsers.test_user_1 = {
+modifiedUsers.test_user_0 = {
     name: 'Jays0n Choi',
     grade: 99
 }
 
-modifiedUsers.test_user_2 = {
+modifiedUsers.test_user_1 = {
     name: 'Yv0n3 Yu@n',
     grade: 88
+}
+
+// Tests maximum allowable name length (12)
+modifiedUsers.test_user_2 = {
+    name: 'thisIsLonggg',
+    grade: 88
+}
+
+// Tests minimum allowable name length (1)
+modifiedUsers.test_user_3 = {
+    name: 's',
+    grade: 88
+}
+
+// Tests maximum allowable grade (100)
+modifiedUsers.test_user_4 = {
+    name: 'dan',
+    grade: 100
+}
+
+// Tests minimum allowed grade (0)
+modifiedUsers.test_user_5 = {
+    name: 'michael',
+    grade: 0
 }
 
 
 const validUsers = {};
 
-validUsers.test_user_1 = {
+
+validUsers.test_user_0 = {
     _id: "5e4b28f32411805f4dc85809",
     name: 'Jason Chiu',
     grade: 0
 };
 
-validUsers.test_user_2 = {
+validUsers.test_user_1 = {
     _id: "5e4b28f32411805f4dc85808",
     name: 'Yvonne Yuan',
     grade: 100
 };
 
-validUsers.test_user_3 = {
+validUsers.test_user_2 = {
     _id: "5e4b28f32411805f4dc85807",
     name: 'Thi Nguyen',
     grade: 99
 };
 
-validUsers.test_user_4 = {
+validUsers.test_user_3 = {
     _id: "5e4b28f32411805f4dc85806",
     name: 'Tan Nguyen',
     grade: 50
@@ -85,12 +118,12 @@ invalidUsers.test_user_invalid_5 = {
     name: 123, grade: 99
 };
 
-// Invalid due to name too long
+// Invalid due to name too long (way larger than 12)
 invalidUsers.test_user_invalid_6 = {
     name: "big william johnson dorkus", grade: 99
 };
 
-// Invalid due to grade under 0
+// Invalid due to grade under 0, tests boundary
 invalidUsers.test_user_invalid_7 = {
     name: "dunce", grade: -1
 };
