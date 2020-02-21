@@ -22,7 +22,7 @@ describe('Users', function () {
             const response = await chai.request(app).get('/students');
             assert.equal(response.body.length === 0, true, 'Results should be empty');
             assert.equal(response.status, 200, 'Response should be 200');
-            // TODO: Test headers
+            assert.equal(response.headers["content-type"] === 'application/json; charset=utf-8', true, 'Headers should match');
         } catch (err) {
             throw err;
         }
@@ -34,6 +34,7 @@ describe('Users', function () {
             const response = await chai.request(app).post('/students').send(testParams.validUsers.test_user_0);
             assert.ownInclude(response.body, testParams.validUsers.test_user_0, 'UserA should be returned in response');
             assert.equal(response.status, 201, 'Response should be 201');
+            assert.equal(response.headers["content-type"] === 'application/json; charset=utf-8', true, 'Headers should match');
         } catch (err) {
             throw err;
         }
@@ -48,6 +49,8 @@ describe('Users', function () {
             try {
                 const response = await chai.request(app).post('/students').send(testParams.invalidUsers[`test_user_invalid_${i}`]);
                 assert.equal(response.status, 400, 'Response should be 400');
+                assert.equal(response.headers["content-type"] === 'text/plain; charset=utf-8', true, 'Headers should match');
+
             } catch (err) {
                 throw err;
             }
