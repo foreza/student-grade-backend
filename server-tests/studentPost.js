@@ -5,6 +5,8 @@ const app = require('../app');
 
 const studentModel = require('../models/studentModel');
 const testParams = require('./data/testUserSet');
+const testUtils = require('./testUtils');
+
 
 chai.use(chaiHttp);
 
@@ -20,9 +22,9 @@ describe('Users', function () {
     it('Verify database is empty, verify response code (200)', async function () {
         try {
             const response = await chai.request(app).get('/students');
-            assert.equal(response.body.length === 0, true, 'Results should be empty');
-            assert.equal(response.status, 200, 'Response should be 200');
-            assert.equal(response.headers["content-type"] === 'application/json; charset=utf-8', true, 'Headers should match');
+            testUtils.checkBodyLength(response, 0);
+            testUtils.checkResStatus(response, 200);
+            testUtils.checkHeaderOnSuccess(response);
         } catch (err) {
             throw err;
         }

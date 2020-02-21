@@ -5,6 +5,8 @@ const app = require('../app');
 
 const studentModel = require('../models/studentModel');
 const testParams = require('./data/testSortUserSet');
+const testUtils = require('./testUtils');
+
 
 chai.use(chaiHttp);
 
@@ -46,8 +48,10 @@ describe('Users', function() {
   it(`Get all ${testParams.test_user_set.length} users after test setup`, async function() {
     try {
       const response = await chai.request(app).get('/students');
-      assert.equal(response.body.length === testParams.test_user_set.length, true, `Should have ${testParams.test_user_set.length}`);
-      assert.equal(response.status, 200, 'Response should be 200');
+
+      testUtils.checkBodyLength(response, testParams.test_user_set.length);
+      testUtils.checkResStatus(response, 200);
+      testUtils.checkHeaderOnSuccess(response);
     } catch (err) {
       throw err;
     }

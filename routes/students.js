@@ -82,7 +82,11 @@ router.delete('/:id', [middleware.logger, middleware.checkMongoID], async (req, 
 
     try {
         const result = await studentUtils.deleteStudentWithUID(req.params.id);
-        res.json(result);
+        if (result != null){
+            res.json(result);
+        } else {
+            res.sendStatus(400);
+        }
     } catch (err) {
         next(err)
     }

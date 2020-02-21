@@ -5,6 +5,8 @@ const app = require('../app');
 
 const studentModel = require('../models/studentModel');
 const testParams = require('./data/testUserSet');
+const testUtils = require('./testUtils');
+
 
 chai.use(chaiHttp);
 
@@ -24,9 +26,8 @@ describe('Users', function () {
 
     await studentModel.deleteMany({}).then(async function () {
       try {
-        const response = await chai.request(app).post('/students').send(testParams.validUsers.test_user_1);
+        await chai.request(app).post('/students').send(testParams.validUsers.test_user_1);
       } catch (err) {
-        // something happened with test setup
         throw err;
       }
       
@@ -37,8 +38,9 @@ describe('Users', function () {
   it('Get all users after test setup', async function () {
     try {
       const response = await chai.request(app).get('/students');
-      assert.equal(response.body.length == 1, true, 'Should have one result');
-      assert.equal(response.status, 200, 'Response should be 200');
+      testUtils.checkBodyLength(response, 1);
+      testUtils.checkResStatus(response, 200);
+      testUtils.checkHeaderOnSuccess(response);
     } catch (err) {
       throw err;
     }
