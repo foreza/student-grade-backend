@@ -1,6 +1,8 @@
 
 const studentUtils = require('../db/util_students');
 const middlewareCollection = {};
+const yup = require('yup');
+
 
 middlewareCollection.logger = function (req, res, next) {
     console.log(` Received ${req.method} request to: ${req.baseUrl}`)
@@ -8,7 +10,7 @@ middlewareCollection.logger = function (req, res, next) {
 }
 
 
-middlewareCollection.checkUIDCollision = async function(req, res, next) {
+middlewareCollection.checkUIDCollision = async function (req, res, next) {
 
     try {
         const uid = req.body._id;
@@ -22,20 +24,48 @@ middlewareCollection.checkUIDCollision = async function(req, res, next) {
         } else {
             next();
         }
-        
+
     } catch {
         res.sendStatus(400);
     }
-    
+
 }
 
 
-middlewareCollection.checkGradeRequestParam = function(req, res, next) {
+
+let studentSchema = yup.object().shape({
+    name: yup
+        .string()
+        .required()
+        .min(1)
+        .max(12),
+    grade: yup
+        .number()
+        .required()
+        .positive()
+        .integer()
+        .min(0)
+        .max(100)
+});
+
+
+middlewareCollection.validateSchema = async (req, res, next) => {
+    studentSchema.isValid(req.body).then(async (valid) => {
+        if (valid) {
+            next();
+        } else {
+            res.sendStatus(400);
+        }
+    });
+
+};
+
+middlewareCollection.checkGradeRequestParam = function (req, res, next) {
 
     const gradeParam = req.body.grade;
 
-    if (gradeParam != undefined 
-        && (typeof(gradeParam) === 'number')
+    if (gradeParam != undefined
+        && (typeof (gradeParam) === 'number')
         && gradeParam <= 100
         && gradeParam >= 0) {
         next()
@@ -46,12 +76,12 @@ middlewareCollection.checkGradeRequestParam = function(req, res, next) {
 }
 
 
-middlewareCollection.checkNameRequestParam = function(req, res, next) {
+middlewareCollection.checkNameRequestParam = function (req, res, next) {
 
     const nameParam = req.body.name;
 
-    if (nameParam 
-        && (typeof(nameParam) === 'string')
+    if (nameParam
+        && (typeof (nameParam) === 'string')
         && nameParam.length > 0
         && nameParam.length <= 12) {
         next()

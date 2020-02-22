@@ -2,23 +2,6 @@ const router = require('express').Router();
 const studentUtils = require('../db/util_students');
 const middleware = require('../middleware/collection')
 var qs = require('qs');
-var yup = require('yup');
-
-
-let studentSchema = yup.object().shape({
-    name: yup
-        .string()
-        .required()
-        .min(1)
-        .max(12),
-    grade: yup
-        .number()
-        .required()
-        .positive()
-        .integer()
-        .min(0)
-        .max(100)
-});
 
 
 
@@ -62,21 +45,12 @@ router.get('/', middleware.logger, async (req, res, next) => {
 
 
 // POST: Add new student 
-router.post('/', [middleware.logger, middleware.checkUIDCollision], async (req, res, next) => {
+router.post('/', [middleware.logger, middleware.checkUIDCollision, middleware.validateSchema], async (req, res, next) => {
 
     try {
-        studentSchema.isValid(req.body).then(async (valid) => {
-            if (valid) {
-                const result = await studentUtils.createStudent(req.body)
-                res.status(201).json(result)
-            } else {
-                console.log("did not match yup schema")
-                res.sendStatus(400)
-            }
-        });
-
+        const result = await studentUtils.createStudent(req.body)
+        res.status(201).json(result)
     } catch (err) {
-        // On error, pass it off to somebody else!
         next(err)
     }
 
