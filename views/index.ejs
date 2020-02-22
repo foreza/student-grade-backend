@@ -13,15 +13,15 @@
 
 	<% if(darkMode == 1){ %>
 		<body class="darkMode" id="body-content">
-	  <% } else{ %>  
+	  <% } else{ %>
 		<body  id="body-content">
 	 <% } %>
 
 		<header>
 			<div id="header-setting">
 				<div class="header-button-select">
-					<a href="/?darkMode=<%= darkMode * -1 %>&sortType=<%= sortType %>&sortDir=<%= sortDir %>">
-						Toggle Dark Mode</a> 
+					<a href="/?<%= sortQuery %>">
+						Toggle Dark Mode</a>
 				</div>
 
 			</div>
@@ -32,29 +32,8 @@
 				<!-- Table Header -->
 				<thead>
 					<tr>
-						<th id="sortTableByName">
-							<a href="/?sortType=name&sortDir=<%= sortDir * -1%>">Name</a> 
-							<% if(sortType == 'name'){ %> 
-							<span><% if(sortDir == '-1') { %> ∧
-								<% } else { %> ∨
-								<% } %> 
-							</span>
-							<% } else { %>
-							<span>*</span>
-							<% } %>
-							</th>
-						<th id="sortTableByGrade">
-							<a href="/?sortType=grade&sortDir=<%= sortDir * -1 %>">Grade</a> 
-							<% if(sortType == 'grade'){ %> 
-								<span><% if(sortDir == '1') { %> ∧
-									<% } else { %> ∨
-									<% } %> 
-								</span>
-								<% } else { %>
-								<span>*</span>
-								<% } %>
-								</th>
-						</th>
+						<th id="sortTableByName"><a href="/?<%= handleSortQuery('name') %>">Name</a></th>
+						<th id="sortTableByGrade"><a href="/?<%= handleSortQuery('grade') %>">Grade</a></th>
 						<th>Options</th>
 					</tr>
 				</thead>
@@ -73,13 +52,13 @@
 					<div class="on-edit-show">
 						<div class="is-editable">
 							<button form="studentEditForm" type="submit">Save</button>
-							<a href="/?sortType=<%= sortType %>&sortDir=<%= sortDir %>">Cancel</a>
+							<a href="/?<%= sortQuery %>">Cancel</a>
 						</div>
 
 					</div>
 				</td>
-				<form id="studentEditForm" method="POST" action="/save/<%= students[i]._id %>?sortType=<%= sortType %>&sortDir=<%= sortDir %>"></form>
-					<% } else{ %>  
+				<form id="studentEditForm" method="POST" action="/save/<%= students[i]._id %>?<%= sortQuery %>"></form>
+					<% } else{ %>
 						<td><%= students[i].name %></td>
 						<td><%= students[i].grade %></td>
 						<td>
@@ -88,11 +67,11 @@
 						<span>Menu</span>
 					  </button>
 					  <div class="dropdown-content">
-						<a href="/?editable=<%= students[i]._id %>&sortType=<%= sortType %>&sortDir=<%= sortDir %>">Edit</a>
-						<a href="/delete/<%= students[i]._id %>?sortType=<%= sortType %>&sortDir=<%= sortDir %>">Delete</a>
+						<a href="/?editable=<%= students[i]._id %>&<%= sortQuery %>">Edit</a>
+						<a href="/delete/<%= students[i]._id %>?<%= sortQuery %>">Delete</a>
 					</div>
 				  </div>
-				  
+
 				  </td>
 				  <% } %>
             </tr>
@@ -110,7 +89,7 @@
 							<button id="submit-new-student-btn" form="studentSubmissionForm" type="submit">Add Student</button>
 						</td>
 					</tr>
-					
+
 				</tfoot>
 
 				<form id="studentSubmissionForm" method="POST" action="/?sortType=<%= sortType %>&sortDir=<%= sortDir %>"></form>
