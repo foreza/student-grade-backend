@@ -1,43 +1,60 @@
 const router = require('express').Router();
 const studentUtils = require('../db/util_students');
 const middleware = require('../middleware/collection')
-var qs = require ('qs');
+var qs = require('qs');
+var yup = require('yup');
+
+
+let studentSchema = yup.object().shape({
+    name: yup
+        .string()
+        .required()
+        .min(1)
+        .max(12),
+    grade: yup
+        .number()
+        .required()
+        .positive()
+        .integer()
+        .min(0)
+        .max(100)
+});
 
 
 
 // GET: List all students in given sort order provided via query param
 router.get('/', middleware.logger, async (req, res, next) => {
 
-        try {
+    try {
 
-            // TODO: Abstract this into a middleware to use in both index and students
+        // TODO: Abstract this into a middleware to use in both index and students
 
-            // Define a sortObj that we will pass to the DB
-            let sortObj = [];               
+        // Define a sortObj that we will pass to the DB
+        let sortObj = [];
 
-            let sortString = qs.parse(req.query, { comma: true });
+        let sortString = qs.parse(req.query, { comma: true });
 
-            if (sortString.sort != undefined && sortString.dir != undefined) {
+        if (sortString.sort != undefined && sortString.dir != undefined) {
 
-              // If these params are both passed, get them and store them
-              sortTypes = (sortString.sort[0]).split(",");
-              sortDir = (sortString.dir[0]).split(",");
-      
-              for (var i = 0; i < sortTypes.length; ++i) {
+            // If these params are both passed, get them and store them
+            sortTypes = (sortString.sort[0]).split(",");
+            sortDir = (sortString.dir[0]).split(",");
 
-                let tSort = sortTypes[i] === undefined ? "name" : sortTypes[i];   
+            for (var i = 0; i < sortTypes.length; ++i) {
+
+                let tSort = sortTypes[i] === undefined ? "name" : sortTypes[i];
                 let tDir = sortDir[i] === undefined ? "1" : Math.sign(sortDir[i]);        // Cast it down to -1 or 1. -1 for ascend, +1 for descend
-                let sortParam = [tSort,tDir];
+                let sortParam = [tSort, tDir];
                 sortObj.push(sortParam);
-              }
             }
-      
-            const students = await studentUtils.listAllStudentsAndSort(sortObj);  
-            res.json(students);
-        
-        } catch (err) {
-            next(err);
         }
+
+        const students = await studentUtils.listAllStudentsAndSort(sortObj);
+        res.json(students);
+
+    } catch (err) {
+        next(err);
+    }
 
 
 })
@@ -45,15 +62,23 @@ router.get('/', middleware.logger, async (req, res, next) => {
 
 
 // POST: Add new student 
-router.post('/', [middleware.logger, middleware.checkUIDCollision, middleware.checkGradeRequestParam, middleware.checkNameRequestParam], async (req, res, next) => {
+router.post('/', [middleware.logger, middleware.checkUIDCollision], async (req, res, next) => {
 
     try {
-            const result = await studentUtils.createStudent(req.body)
-            res.status(201).json(result)
-        } catch (err) {
-            // On error, pass it off to somebody else!
-            next(err)
-        }
+        studentSchema.isValid(req.body).then(async (valid) => {
+            if (valid) {
+                const result = await studentUtils.createStudent(req.body)
+                res.status(201).json(result)
+            } else {
+                console.log("did not match yup schema")
+                res.sendStatus(400)
+            }
+        });
+
+    } catch (err) {
+        // On error, pass it off to somebody else!
+        next(err)
+    }
 
 })
 
@@ -64,12 +89,12 @@ router.get('/:id', [middleware.logger, middleware.checkMongoID], async (req, res
 
     try {
         const students = await studentUtils.retrieveStudentByUID(req.params.id);
-        if (students != null){
+        if (students != null) {
             res.json(students);
         } else {
             res.sendStatus(400);
         }
-        
+
     } catch (err) {
         next(err)
     }
@@ -83,7 +108,7 @@ router.delete('/:id', [middleware.logger, middleware.checkMongoID], async (req, 
 
     try {
         const result = await studentUtils.deleteStudentWithUID(req.params.id);
-        if (result != null){
+        if (result != null) {
             res.json(result);
         } else {
             res.sendStatus(400);
@@ -101,7 +126,7 @@ router.put('/:id', [middleware.logger, middleware.checkMongoID, middleware.check
 
     try {
         const result = await studentUtils.updateStudentWithUID(req.params.id, req.body)
-        if (result != null){
+        if (result != null) {
             res.json(result)        // Note: the old object is returned
         } else {
             res.sendStatus(404);

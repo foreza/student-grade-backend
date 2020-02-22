@@ -7,7 +7,6 @@ var bodyParser = require('body-parser');
 var mongoose = require ('mongoose')
 var index = require('./routes/index');
 var students = require('./routes/students');
-
 var cors = require('cors')
 
 

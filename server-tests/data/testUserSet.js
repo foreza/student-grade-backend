@@ -115,7 +115,7 @@ invalidUsers.test_user_invalid_4 = {
 
 // Invalid due to name incorrect type
 invalidUsers.test_user_invalid_5 = {
-    name: 123, grade: 99
+    name: new Date(), grade: 99
 };
 
 // Invalid due to name too long (way larger than 12)
