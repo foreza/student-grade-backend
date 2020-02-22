@@ -23,14 +23,10 @@ Advanced Student API test (GET/Sort)
 
 describe('Users', function () {
   before(async function () {
-    // runs before all tests in this block
-
-    // Delete all students, add test student collection
     await studentModel.deleteMany({}).then(async function () {
       try {
         await studentModel.collection.insertMany(testParams.test_user_set_name);
       } catch (err) {
-        // something happened with test setup
         throw err;
       }
     });
@@ -39,7 +35,6 @@ describe('Users', function () {
   it(`Get all ${testParams.test_user_set_name.length} users after test setup`, async function () {
     try {
       const response = await chai.request(app).get('/students');
-
       testUtils.checkBodyLength(response, testParams.test_user_set_name.length);
       testUtils.checkResStatus(response, 200);
       testUtils.checkHeaderOnSuccess(response);
@@ -47,7 +42,6 @@ describe('Users', function () {
       throw err;
     }
   });
-
 
   it(`Compares sorted by name ascending, then grade ascending`, async function () {
     try {
@@ -59,6 +53,7 @@ describe('Users', function () {
     }
 
   })
+
   it(`Compares sorted by name ascending, then grade descending`, async function () {
     try {
       const response = await chai.request(app).get('/students/?sort[]=name,grade&dir[]=-1,1');
@@ -69,6 +64,7 @@ describe('Users', function () {
     }
 
   })
+
   it(`Compares sorted by name descending, then grade ascending`, async function () {
     try {
       const response = await chai.request(app).get('/students/?sort[]=name,grade&dir[]=1,-1');
@@ -79,6 +75,7 @@ describe('Users', function () {
     }
 
   })
+
   it(`Compares sorted by name descending, then grade descending`, async function () {
     try {
       const response = await chai.request(app).get('/students/?sort[]=name,grade&dir[]=1,1');

@@ -23,14 +23,11 @@ Advanced Student API test (GET/Sort)
 
 describe('Users', function () {
   before(async function () {
-    // runs before all tests in this block
 
-    // Delete all students, add test student collection
     await studentModel.deleteMany({}).then(async function () {
       try {
         await studentModel.collection.insertMany(testParams.test_user_set_grade);
       } catch (err) {
-        // something happened with test setup
         throw err;
       }
     });
@@ -39,7 +36,6 @@ describe('Users', function () {
   it(`Get all ${testParams.test_user_set_grade.length} users after test setup`, async function () {
     try {
       const response = await chai.request(app).get('/students');
-
       testUtils.checkBodyLength(response, testParams.test_user_set_grade.length);
       testUtils.checkResStatus(response, 200);
       testUtils.checkHeaderOnSuccess(response);
@@ -68,6 +64,7 @@ describe('Users', function () {
     }
 
   })
+
   it(`Compares sorted by grade descending, then name ascending`, async function () {
     try {
       const response = await chai.request(app).get('/students/?sort[]=grade,name&dir[]=1,-1');
@@ -78,6 +75,7 @@ describe('Users', function () {
     }
 
   })
+
   it(`Compares sorted by grade descending, then name descending`, async function () {
     try {
       const response = await chai.request(app).get('/students/?sort[]=grade,name&dir[]=1,1');
@@ -89,10 +87,8 @@ describe('Users', function () {
 
   })
 
-
   after(async function () {
-    // runs after all tests in this block
-    // await studentModel.deleteMany({});
+    await studentModel.deleteMany({});
   });
 
 });
