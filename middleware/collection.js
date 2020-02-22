@@ -1,9 +1,32 @@
 
+const studentUtils = require('../db/util_students');
 const middlewareCollection = {};
 
 middlewareCollection.logger = function (req, res, next) {
     console.log(` Received ${req.method} request to: ${req.baseUrl}`)
     next()
+}
+
+
+middlewareCollection.checkUIDCollision = async function(req, res, next) {
+
+    try {
+        const uid = req.body._id;
+        if (uid != undefined) {
+            const students = await studentUtils.retrieveStudentByUID(uid)
+            if (students != null) {
+                res.sendStatus(409)
+            } else {
+                next();
+            }
+        } else {
+            next();
+        }
+        
+    } catch {
+        res.sendStatus(400);
+    }
+    
 }
 
 

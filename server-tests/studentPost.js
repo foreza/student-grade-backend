@@ -11,7 +11,9 @@ const testUtils = require('./testUtils');
 chai.use(chaiHttp);
 
 // This test shall test the following:
-// - Add a valid student, verify response code 201
+// - Add valid student, verify response code 201
+// - Check for collision on POST, verify response 409
+// - Add invalid students, verify response code 400
 
 
 describe('Users', function () {
@@ -30,13 +32,26 @@ describe('Users', function () {
         }
     });
 
-    it('Add a user (A), verify user A returns, verify response code (201)', async function () {
+    it('Add a user 0, verify user 0 returns, verify response code (201)', async function () {
 
         try {
             const response = await chai.request(app).post('/students').send(testParams.validUsers.test_user_0);
-            assert.ownInclude(response.body, testParams.validUsers.test_user_0, 'UserA should be returned in response');
+            assert.ownInclude(response.body, testParams.validUsers.test_user_0, 'User 0 should be returned in response');
             assert.equal(response.status, 201, 'Response should be 201');
             assert.equal(response.headers["content-type"] === 'application/json; charset=utf-8', true, 'Headers should match');
+        } catch (err) {
+            throw err;
+        }
+
+    })
+
+    it('Attempt to add user 0 again, verify response code (409)', async function () {
+
+        try {
+            const response = await chai.request(app).post('/students').send(testParams.validUsers.test_user_0);
+            assert.notOwnInclude(response.body, testParams.validUsers.test_user_0, 'User 0 should not be added due to conflict');
+            assert.equal(response.status, 409, 'Response should be 409');
+            assert.equal(response.headers["content-type"] === 'text/plain; charset=utf-8', true, 'Headers should match');
         } catch (err) {
             throw err;
         }
@@ -59,72 +74,6 @@ describe('Users', function () {
     
         })
     }
-
-    // it('Add invalid user 0, verify response code (400)', async function () {
-
-    //     try {
-    //         const response = await chai.request(app).post('/students').send(testParams.invalidUsers.test_user_invalid_0);
-    //         assert.equal(response.status, 400, 'Response should be 400');
-    //     } catch (err) {
-    //         throw err;
-    //     }
-
-    // })
-
-    // it('Add invalid user 1, verify response code (400)', async function () {
-
-    //     try {
-    //         const response = await chai.request(app).post('/students').send(testParams.invalidUsers.test_user_invalid_1);
-    //         assert.equal(response.status, 400, 'Response should be 400');
-    //     } catch (err) {
-    //         throw err;
-    //     }
-
-    // })
-
-    // it('Add invalid user 2, verify response code (400)', async function () {
-
-    //     try {
-    //         const response = await chai.request(app).post('/students').send(testParams.invalidUsers.test_user_invalid_2);
-    //         assert.equal(response.status, 400, 'Response should be 400');
-    //     } catch (err) {
-    //         throw err;
-    //     }
-
-    // })
-
-    // it('Add invalid user 3, verify response code (400)', async function () {
-
-    //     try {
-    //         const response = await chai.request(app).post('/students').send(testParams.invalidUsers.test_user_invalid_3);
-    //         assert.equal(response.status, 400, 'Response should be 400');
-    //     } catch (err) {
-    //         throw err;
-    //     }
-
-    // })
-
-    // it('Add invalid user 4, verify response code (400)', async function () {
-
-    //     try {
-    //         const response = await chai.request(app).post('/students').send(testParams.invalidUsers.test_user_invalid_4);
-    //         assert.equal(response.status, 400, 'Response should be 400');
-    //     } catch (err) {
-    //         throw err;
-    //     }
-
-    // })
-
-    // it('Add invalid user 5, verify response code (400)', async function () {
-
-    //     try {
-    //         const response = await chai.request(app).post('/students').send(testParams.invalidUsers.test_user_invalid_4);
-    //         assert.equal(response.status, 400, 'Response should be 400');
-    //     } catch (err) {
-    //         throw err;
-    //     }
-
-    // })
 
     after(async function () {
         await studentModel.deleteMany({});
