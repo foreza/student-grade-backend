@@ -29,10 +29,8 @@ router.get('/delete/:id', async (req, res, next) => {
 
 
 // TODO: Middleware function to redirect
-function util_generateRedirectStringFromReq(req, res, next){
-  let sortDir = req.query.sortDir === undefined ? "1" : Math.sign(req.query.sortDir);
-  let sortType = req.query.sortType === undefined ? "name" : req.query.sortType;
-  return `/?sortType=${sortType}&sortDir=${sortDir}`;
+function util_generateRedirectStringFromReq(req){
+  return `/?sortType=${req.query.sortType}&sortDir=${req.query.sortDir}`;
 }
 
 
@@ -102,14 +100,32 @@ router.get('/', async (req, res, next) => {
           sortDir: Object.values(currentSort).join(','),
         }
 
-        return qs.stringify(output);
+        return qs.stringify(output, { encode: false });
       }
 
-      renderParams.students = await StudentModel.Get({}, sort);
+      renderParams.students = await StudentModel.Get({}, sort); // Change this
+
       renderParams.sortObj = sort;
-      renderParams.sortQuery = qs.stringify(req.query);
-      console.log(renderParams.sortQuery);
+
+      // renderParams.sortObj = sort;
+
+      const queryConstruct = {
+        sortType: Object.keys(renderParams.sortObj).join(','),
+        sortDir: Object.values(renderParams.sortObj).join(','),
+      }
+
+      console.log("Render params sortObj: ", queryConstruct);
+      renderParams.sortQuery = qs.stringify(queryConstruct, { encode: false  })
+
+  
+
+      // console.log("sort query: " + renderParams.sortQuery);
+
+      renderParams.editableId = req.query.editable === undefined ? "" : req.query.editable;        // Cast it down to -1 or 1. -1 for ascend, +1 for descend	
+      // console.log("editable id: " + req.query.editable);
+
       res.render('index', renderParams);
+
     } catch (err){
       next (err);
     }
