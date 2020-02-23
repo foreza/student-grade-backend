@@ -23,24 +23,20 @@ Advanced Student API test (GET/Sort)
 */
 
 describe('Users', function () {
-  before(async function () {
-    // runs before all tests in this block
+  before(async () => {
 
-    // Delete all students, add test student collection
-    await studentModel.deleteMany({}).then(async function () {
+    await studentModel.deleteMany({}).then(async () => {
       try {
         await studentModel.collection.insertMany(testParams.test_user_set);
       } catch (err) {
-        // something happened with test setup
         throw err;
       }
     });
   });
 
-  it(`Get all ${testParams.test_user_set.length} users after test setup`, async function () {
+  it(`Get all ${testParams.test_user_set.length} users after test setup`, async () => {
     try {
       const response = await chai.request(app).get('/students');
-
       testUtils.checkBodyLength(response, testParams.test_user_set.length);
       testUtils.checkResStatus(response, 200);
       testUtils.checkHeaderOnSuccess(response);
@@ -49,7 +45,7 @@ describe('Users', function () {
     }
   });
 
-  it(`Compare sorted by name ascending`, async function () {
+  it(`Compare sorted by name ascending`, async () => {
     try {
       const response = await chai.request(app).get('/students/?sort[]=name&dir[]=-1');
       assert.sameDeepOrderedMembers(response.body, testParams.test_user_set_sortNameAscending, `Should mostly be equal...`)
@@ -60,7 +56,7 @@ describe('Users', function () {
   });
 
 
-  it(`Compares sorted by name descending`, async function () {
+  it(`Compares sorted by name descending`, async () => {
     try {
       const response = await chai.request(app).get('/students/?sort[]=name&dir[]=1');
       assert.deepEqual(response.body, testParams.test_user_set_sortNameDescending, `Should mostly be equal...`)
@@ -70,22 +66,20 @@ describe('Users', function () {
     }
 
   })
-  it(`Compares sorted by grade ascending`, async function () {
+  it(`Compares sorted by grade ascending`, async () => {
     try {
-      const response = await chai.request(app).get('/students');
-      // TODO: Implement in test case
-      // assert.deepEqual(response.body, testParams.test_user_set_sortGradeAscending, `Should mostly be equal...`)
+      const response = await chai.request(app).get('/students/?sort[]=grade&dir[]=1');
+      assert.deepEqual(response.body, testParams.test_user_set_sortGradeAscending, `Should mostly be equal...`)
       assert.equal(response.status, 200, 'Response should be 200');
     } catch (err) {
       throw err;
     }
 
   })
-  it(`Compares sorted by grade descending`, async function () {
+  it(`Compares sorted by grade descending`, async () => {
     try {
-      const response = await chai.request(app).get('/students');
-      // TODO: Implement in test case
-      // assert.deepEqual(response.body, testParams.test_user_set_sortGradeAscending, `Should mostly be equal...`)
+      const response = await chai.request(app).get('/students/?sort[]=grade&dir[]=-1');
+      assert.deepEqual(response.body, testParams.test_user_set_sortGradeDescending, `Should mostly be equal...`)
       assert.equal(response.status, 200, 'Response should be 200');
     } catch (err) {
       throw err;
@@ -93,7 +87,7 @@ describe('Users', function () {
 
   })
 
-  after(async function () {
+  after(async () => {
     await studentModel.deleteMany({});
   });
 
