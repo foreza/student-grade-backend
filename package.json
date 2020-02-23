@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "NODE_ENV=tests mocha ./server-tests --exit"
+    "test": "NODE_ENV=tests mocha ./server-tests --exit", 
+    "debug": "nodemon --inspect ./bin/www"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
@@ -30,7 +31,6 @@
     "hooks": {
       "pre-commit": "",
       "pre-push": "npm test",
-      "...": "..."
     }
   }
 }
