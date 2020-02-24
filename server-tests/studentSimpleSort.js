@@ -47,7 +47,7 @@ describe('Users', function () {
 
   it(`Compare sorted by name ascending`, async () => {
     try {
-      const response = await chai.request(app).get('/students/?sort[]=name&dir[]=-1');
+      const response = await chai.request(app).get('/students/?sort=name&dir=-1');
       assert.sameDeepOrderedMembers(response.body, testParams.test_user_set_sortNameAscending, `Should mostly be equal...`)
       assert.equal(response.status, 200, 'Response should be 200');
     } catch (err) {
@@ -58,7 +58,7 @@ describe('Users', function () {
 
   it(`Compares sorted by name descending`, async () => {
     try {
-      const response = await chai.request(app).get('/students/?sort[]=name&dir[]=1');
+      const response = await chai.request(app).get('/students/?sort=name&dir=1');
       assert.deepEqual(response.body, testParams.test_user_set_sortNameDescending, `Should mostly be equal...`)
       assert.equal(response.status, 200, 'Response should be 200');
     } catch (err) {
@@ -68,7 +68,7 @@ describe('Users', function () {
   })
   it(`Compares sorted by grade ascending`, async () => {
     try {
-      const response = await chai.request(app).get('/students/?sort[]=grade&dir[]=1');
+      const response = await chai.request(app).get('/students/?sort=grade&dir=1');
       assert.deepEqual(response.body, testParams.test_user_set_sortGradeAscending, `Should mostly be equal...`)
       assert.equal(response.status, 200, 'Response should be 200');
     } catch (err) {
@@ -78,7 +78,7 @@ describe('Users', function () {
   })
   it(`Compares sorted by grade descending`, async () => {
     try {
-      const response = await chai.request(app).get('/students/?sort[]=grade&dir[]=-1');
+      const response = await chai.request(app).get('/students/?sort=grade&dir=-1');
       assert.deepEqual(response.body, testParams.test_user_set_sortGradeDescending, `Should mostly be equal...`)
       assert.equal(response.status, 200, 'Response should be 200');
     } catch (err) {

@@ -15,13 +15,13 @@ router.get('/', middleware.logger, async (req, res, next) => {
         // Define a sortObj that we will pass to the DB
         let sortObj = [];
 
-        let sortString = qs.parse(req.query, { comma: true });
+        // let sortString = qs.parse(req.query, { comma: true });
 
-        if (sortString.sort != undefined && sortString.dir != undefined) {
+        if (req.query.sort != undefined && req.query.dir != undefined) {
 
             // If these params are both passed, get them and store them
-            sortTypes = (sortString.sort[0]).split(",");
-            sortDir = (sortString.dir[0]).split(",");
+            sortTypes = req.query.sort.split(",");
+            sortDir = req.query.dir.split(",");
 
             for (var i = 0; i < sortTypes.length; ++i) {
 

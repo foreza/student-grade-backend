@@ -46,7 +46,7 @@ describe('Users', function () {
 
   it(`Compares sorted by grade ascending, then name ascending`, async function () {
     try {
-      const response = await chai.request(app).get('/students/?sort[]=grade,name&dir[]=-1,-1');
+      const response = await chai.request(app).get('/students/?sort=grade,name&dir=-1,-1');
       assert.deepEqual(response.body, testParams.test_user_set_grade_asc_name_asc, `Should mostly be equal...`)
       assert.equal(response.status, 200, 'Response should be 200');
     } catch (err) {
@@ -56,7 +56,7 @@ describe('Users', function () {
   })
   it(`Compares sorted by grade ascending, then name descending`, async function () {
     try {
-      const response = await chai.request(app).get('/students/?sort[]=grade,name&dir[]=-1,1');
+      const response = await chai.request(app).get('/students/?sort=grade,name&dir=-1,1');
       assert.deepEqual(response.body, testParams.test_user_set_grade_asc_name_desc, `Should mostly be equal...`)
       assert.equal(response.status, 200, 'Response should be 200');
     } catch (err) {
@@ -67,7 +67,7 @@ describe('Users', function () {
 
   it(`Compares sorted by grade descending, then name ascending`, async function () {
     try {
-      const response = await chai.request(app).get('/students/?sort[]=grade,name&dir[]=1,-1');
+      const response = await chai.request(app).get('/students/?sort=grade,name&dir=1,-1');
       assert.deepEqual(response.body, testParams.test_user_set_grade_desc_name_asc, `Should mostly be equal...`)
       assert.equal(response.status, 200, 'Response should be 200');
     } catch (err) {
@@ -78,7 +78,7 @@ describe('Users', function () {
 
   it(`Compares sorted by grade descending, then name descending`, async function () {
     try {
-      const response = await chai.request(app).get('/students/?sort[]=grade,name&dir[]=1,1');
+      const response = await chai.request(app).get('/students/?sort=grade,name&dir=1,1');
       assert.deepEqual(response.body, testParams.test_user_set_grade_desc_name_desc, `Should mostly be equal...`)
       assert.equal(response.status, 200, 'Response should be 200');
     } catch (err) {
