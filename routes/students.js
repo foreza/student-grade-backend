@@ -96,7 +96,7 @@ router.delete('/:id', [middleware.logger, middleware.checkMongoID], async (req, 
 
 
 // PUT: Modify student given UID
-router.put('/:id', [middleware.logger, middleware.checkMongoID, middleware.checkGradeRequestParam, middleware.checkNameRequestParam], async (req, res, next) => {
+router.put('/:id', [middleware.logger, middleware.checkMongoID, middleware.validateSchema], async (req, res, next) => {
 
     try {
         const result = await studentUtils.updateStudentWithUID(req.params.id, req.body)

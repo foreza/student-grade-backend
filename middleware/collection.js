@@ -50,13 +50,15 @@ let studentSchema = yup.object().shape({
 
 
 middlewareCollection.validateSchema = async (req, res, next) => {
-    studentSchema.isValid(req.body).then(async (valid) => {
-        if (valid) {
-            next();
-        } else {
-            res.sendStatus(400);
-        }
-    });
+
+    let err = [];
+
+    if (await studentSchema.validate(req.body).catch((e) => { err = e; })) {
+        next();
+    } else {
+        res.setHeader("Content-Type", "text/plain; charset=utf-8")
+        res.status(400).send(err.errors);
+    }
 
 };
 
