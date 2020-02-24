@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "test": "NODE_ENV=tests mocha ./server-tests --exit", 
+    "test": "NODE_ENV=tests mocha ./server-tests --exit",
     "debug": "nodemon --inspect ./bin/www"
   },
   "dependencies": {
@@ -25,12 +25,13 @@
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "husky": "^4.2.3",
-    "mocha": "^7.0.1"
+    "mocha": "^7.0.1",
+    "testcafe": "^1.8.2"
   },
   "husky": {
     "hooks": {
       "pre-commit": "",
-      "pre-push": "npm test"
+      "pre-push": "npm test && npm start & testcafe chrome frontend-tests/"
     }
   }
 }
