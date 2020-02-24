@@ -553,6 +553,7 @@ function enableEditingNameViewForStudentID(id) {
 
     const inputForName = $('<input></input>')
         .attr('id', `${uniqueIDPrefix}input-name${id}`)
+        .attr('class', 'edit-name-field')
         .attr('maxlength', 12)
         .attr('type', "text")
         .attr('value', $(`#${uniqueIDPrefix}name${id} span`).text());
@@ -582,6 +583,7 @@ function enableEditingGradeViewForStudentID(id) {
 
     const inputForGrade = $('<input></input>')
         .attr('id', `${uniqueIDPrefix}input-grade${id}`)
+        .attr('class', 'edit-grade-field')
         .attr('type', "number")
         .attr('min', 0)
         .attr('max', 100)
@@ -645,10 +647,10 @@ function util_returnCreatedRowItemForStudent(student) {
     const colGrade = $('<td></td>').attr('id', `${uniqueIDPrefix}grade${student.id}`);
     const colOptions = $('<td></td>').attr('id', `${uniqueIDPrefix}options${student.id}`);
 
-    const colNameContent = $('<span></span>').text(student.name);
+    const colNameContent = $('<span class="nameContent"></span>').text(student.name);
     colName.append(colNameContent);
 
-    const colGradeContent = $('<span></span>').text(student.grade);
+    const colGradeContent = $('<span class="gradeContent"></span>').text(student.grade);
     colGrade.append(colGradeContent);
 
     const onHoverShow = $('<div></div>').attr('class', 'on-hover-show');
@@ -659,11 +661,13 @@ function util_returnCreatedRowItemForStudent(student) {
 
     const editLink = $('<a></a>')
         .text('Edit')
+        .attr('class', 'link-edit')
         .attr('href', '#')
         .attr('onclick', `click_editActionWithStudentID('${student.id}')`);
 
     const deleteLink = $('<a></a>')
         .text('Delete')
+        .attr('class', 'link-delete')
         .attr('href', '#')
         .attr('onclick', `click_deleteRowWithStudentID('${student.id}')`);
 
@@ -677,11 +681,13 @@ function util_returnCreatedRowItemForStudent(student) {
 
     const saveLink = $('<a></a>')
         .text('Save')
+        .attr('class', 'link-save')
         .attr('href', '#')
         .attr('onclick', `updateRowWithStudentID('${student.id}')`);
 
     const cancelLink = $('<a></a>')
         .text('Cancel')
+        .attr('class', 'link-cancel')
         .attr('href', '#')
         .attr('onclick', `cancelActionWithStudentID('${student.id}')`);
 
