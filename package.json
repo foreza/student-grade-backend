@@ -5,7 +5,7 @@
   "scripts": {
     "start": "NODE_ENV=production node ./bin/www",
     "test": "NODE_ENV=tests mocha ./server-tests --exit ",
-    "fe-test": "NODE_ENV=tests node ./bin/www & testcafe chrome frontend-tests/",
+    "fe-test": "NODE_ENV=tests node ./bin/www & NODE_ENV=tests testcafe chrome frontend-tests/",
     "debug": "NODE_ENV=development nodemon --inspect ./bin/www"
   },
   "dependencies": {
