@@ -107,7 +107,7 @@ function model_getAllStudentDataSortedByType(sortType, sortDir) {
     getSampleRemoteDataSortedByGrade = new Promise(
         function (resolve, reject) {
 
-            $.get(`${baseApiURL}/?sortType=${sortType}&sortDir=${sortDir}`, data => {
+            $.get(`${baseApiURL}/?sort=${sortType}&dir=${sortDir}`, data => {
                 const sortedStudentData = data.map(student => {
                     return {
                         id: student._id,
