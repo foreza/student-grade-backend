@@ -32,7 +32,7 @@
   "husky": {
     "hooks": {
       "pre-commit": "",
-      "pre-push": "npm test && npm start & testcafe chrome frontend-tests/"
+      "pre-push": "npm test && npm start & npm run fe-test"
     }
   }
 }
