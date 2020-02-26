@@ -44,18 +44,18 @@ fixture`Index`
     });
 
     // TODO: Replace
-    test('Add test params' , async t => {
+    // test('Add test params' , async t => {
 
-        for (let i = 0; i < test_user_set.length; ++i){
-            await t
-            .typeText('#input-name', test_user_set[i].name)
-            .typeText('#input-grade', String(test_user_set[i].grade))
-            .click("#submit-new-student");
-        }
+    //     for (let i = 0; i < test_user_set.length; ++i){
+    //         await t
+    //         .typeText('#input-name', test_user_set[i].name)
+    //         .typeText('#input-grade', String(test_user_set[i].grade))
+    //         .click("#submit-new-student");
+    //     }
 
-        await t
-            .expect(Selector('#table-content').childElementCount).eql(test_user_set.length);
-    });
+    //     await t
+    //         .expect(Selector('#table-content').childElementCount).eql(test_user_set.length);
+    // });
 
 
     // const middleIndex = Number(test_user_set.length/2 -1);
