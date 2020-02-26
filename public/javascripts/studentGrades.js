@@ -292,7 +292,7 @@ function view_updateViewWithModifiedStudent(studentObj, id) {
 
 // Get the input value for the name
 function view_GetFooterFormNameInputValue() {
-    return $("#input-name").val();
+    return $("#input-name").val().trim();
 }
 
 

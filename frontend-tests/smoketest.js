@@ -1,5 +1,6 @@
 import { Selector } from 'testcafe';
-fixture`Getting Started`
+
+fixture`Index`
     .page`http://localhost:3000/basic_index.html`;
 
 test('Test basic input for a student', async t => {
