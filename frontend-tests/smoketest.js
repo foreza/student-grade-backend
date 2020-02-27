@@ -1,4 +1,7 @@
 import { Selector } from 'testcafe';
+const testUtils = require('testUtils');
+
+
 
 fixture`Index`
     .page`http://localhost:3000/basic_index.html`;
