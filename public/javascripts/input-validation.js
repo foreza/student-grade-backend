@@ -50,7 +50,7 @@ function iv_isValidInputForFooterForm(input){
 function validateNameInput(input){
     
     // Check to ensure the value is not empty
-    if (input === "") {
+    if (input === "" || input.length > 12) {
         console.error("validateNameInput FAIL: ", input);
         return false;
     } else {
@@ -64,15 +64,16 @@ function validateNameInput(input){
 // TODO: Refactor so that this doesn't control view
 function validateGradeInput(input){
 
+    var regex = /^[0-9]+$/;  
+
     // TODO: Alert due to specific error?
-    if (isNaN(input) || input < 0 || input > 100){
+    if (!regex.test(input) || isNaN(input) || input < 0 || input > 100 ){
         console.error("validateGradeInput FAIL: ", input);
         return false;
     } else {
         return true;
     }
-
-}
+} 
 
 
 

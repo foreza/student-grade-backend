@@ -1,6 +1,7 @@
 import { Selector } from 'testcafe';
+const testUtils = require('./testUtils');
 
-// TODO: Add this into a test file
+
 const test_user_set = [
     {
         "_id": "5e5310039a2a04b4046e431a",
@@ -34,50 +35,53 @@ const test_user_set = [
     }
 ];
 
-
-
+let deletionCount = 0;
 
 fixture`Index`
     .page`http://localhost:3000/basic_index.html`
-    .before ( async (t) => {
-        // SETUP TESTS
+    .before(async (t) => {
+        testUtils.doMongoConnection();
+        testUtils.clearStudents();
+        testUtils.addSampleSet(test_user_set);
+    })
+    .after(async (t) => {
+        testUtils.clearStudents();
     });
 
-    // TODO: Replace
-    // test('Add test params' , async t => {
+test('Verify test params were added', async t => {
+    await t
+        .expect(Selector('#table-content').childElementCount).eql(test_user_set.length);
+});
 
-    //     for (let i = 0; i < test_user_set.length; ++i){
-    //         await t
-    //         .typeText('#input-name', test_user_set[i].name)
-    //         .typeText('#input-grade', String(test_user_set[i].grade))
-    //         .click("#submit-new-student");
-    //     }
+const middleIndex = Number(test_user_set.length / 2 - 1);
 
-    //     await t
-    //         .expect(Selector('#table-content').childElementCount).eql(test_user_set.length);
-    // });
+test(`Delete the middle student of the set, which is at index: ${middleIndex}`, async t => {
+
+    const studentData = test_user_set[middleIndex];
+    deletionCount++;
+
+    await t
+        .hover(Selector('#table-content .on-hover-show').nth(middleIndex))
+        .click(Selector(`#delete-${studentData._id}`))
+        .expect(Selector('#table-content tr .nameContent').nth(middleIndex).innerText).notEql(test_user_set[middleIndex].name)
+        .expect(Selector('#table-content').childElementCount).eql(test_user_set.length - deletionCount);
 
 
-    // const middleIndex = Number(test_user_set.length/2 -1);
-    // const middleIndex = 1;
+});
 
-    // test(`Delete the middle student of the set, which is at index: ${middleIndex}`, async t => {
 
-    //     // t deleteSelector = 
+test(`Delete the first student of the set, which is at index: ${0}`, async t => {
 
-    //     await t
-    //     .hover(Selector('#table-content .on-hover-show').nth(middleIndex))
-    //     await t.find('.link-delete').click()
-    //     .expect(Selector('#table-content tr .nameContent').nth(middleIndex).innerText).notEql(test_user_set[middleIndex].name)
-    //     .expect(Selector('#table-content').childElementCount).eql(test_user_set.length - 1);
+    const studentData = test_user_set[0];
+    deletionCount++;
 
-    //     await t
-    //         .hover(Selector('#table-content .on-hover-show').nth(middleIndex))
-    //         .click("#table-content .link-delete")
-    //         .expect(Selector('#table-content tr .nameContent').nth(middleIndex).innerText).notEql(test_user_set[middleIndex].name)
-    //         .expect(Selector('#table-content').childElementCount).eql(test_user_set.length - 1);
-    
-    // });
-    
+    await t
+        .hover(Selector('#table-content .on-hover-show').nth(0))
+        .click(Selector(`#delete-${studentData._id}`))
+        .expect(Selector('#table-content').childElementCount).eql(test_user_set.length - deletionCount);
+});
+
+
+
 
 

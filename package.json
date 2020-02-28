@@ -6,7 +6,7 @@
     "start": "NODE_ENV=production node ./bin/www",
     "test": "NODE_ENV=tests mocha ./server-tests --exit ",
     "fe-test": "NODE_ENV=tests node ./bin/www & NODE_ENV=tests testcafe chrome frontend-tests/",
-    "debug": "NODE_ENV=development nodemon --inspect ./bin/www"
+    "debug": "NODE_ENV=tests nodemon --inspect ./bin/www"
   },
   "dependencies": {
     "body-parser": "^1.19.0",

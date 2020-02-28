@@ -156,8 +156,6 @@ function test_utility_logSortedData(studentData) {
     }
 
     formattedTestString += "]"
-    // console.log(studentData);
-    console.log(formattedTestString);
 }
 
 
@@ -175,7 +173,6 @@ function model_addNewStudent(studentObj) {
                 alert(connectionErrorString);
             });
         }).then((studentObj) => {
-            console.log(studentObj)
             students.push(studentObj);      // Add it to the actual array
         }
         );
@@ -395,13 +392,13 @@ function view_setValidationDefaultStateForGradeInput() {
 
 // Retrieve name input for a specific name
 function view_getNameInputForId(id) {
-    return $(`#${uniqueIDPrefix}input-name${id}`).val();
+    return $(`#${uniqueIDPrefix}input-name${id}`).val().trim();
 }
 
 
 // Retrieve grade input for a specific id
 function view_getGradeInputForId(id) {
-    return $(`#${uniqueIDPrefix}input-grade${id}`).val();
+    return $(`#${uniqueIDPrefix}input-grade${id}`).val().trim();
 }
 
 
@@ -568,6 +565,7 @@ function disableEditingNameViewForStudentID(id) {
 
     // Show the specific table cell
     $(`#${uniqueIDPrefix}name${id} span`).removeAttr('class', 'edit-content-hidden');
+    $(`#${uniqueIDPrefix}name${id} span`).attr('class', 'nameContent');
 
     // Access and destroy the input
     $(`#${uniqueIDPrefix}input-name${id}`).remove();
@@ -599,6 +597,8 @@ function disableEditingGradeViewForStudentID(id) {
 
     // Show the specific table cell
     $(`#${uniqueIDPrefix}grade${id} span`).removeAttr('class', 'edit-content-hidden');
+    $(`#${uniqueIDPrefix}grade${id} span`).attr('class', 'gradeContent');
+
 
     // Access and destroy the input
     $(`#${uniqueIDPrefix}input-grade${id}`).remove();
@@ -662,12 +662,14 @@ function util_returnCreatedRowItemForStudent(student) {
     const editLink = $('<a></a>')
         .text('Edit')
         .attr('class', 'link-edit')
+        .attr('id', `edit-${student.id}`)
         .attr('href', '#')
         .attr('onclick', `click_editActionWithStudentID('${student.id}')`);
 
     const deleteLink = $('<a></a>')
         .text('Delete')
         .attr('class', 'link-delete')
+        .attr('id', `delete-${student.id}`)
         .attr('href', '#')
         .attr('onclick', `click_deleteRowWithStudentID('${student.id}')`);
 
@@ -682,12 +684,14 @@ function util_returnCreatedRowItemForStudent(student) {
     const saveLink = $('<a></a>')
         .text('Save')
         .attr('class', 'link-save')
+        .attr('id', `save-${student.id}`)
         .attr('href', '#')
         .attr('onclick', `updateRowWithStudentID('${student.id}')`);
 
     const cancelLink = $('<a></a>')
         .text('Cancel')
         .attr('class', 'link-cancel')
+        .attr('id', `cancel-${student.id}`)
         .attr('href', '#')
         .attr('onclick', `cancelActionWithStudentID('${student.id}')`);
 
