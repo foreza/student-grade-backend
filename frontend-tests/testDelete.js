@@ -1,6 +1,7 @@
 import { Selector } from 'testcafe';
+const testUtils = require('./testUtils');
 
-// TODO: Add this into a test file
+
 const test_user_set = [
     {
         "_id": "5e5310039a2a04b4046e431a",
@@ -34,25 +35,18 @@ const test_user_set = [
     }
 ];
 
-
-
-
 fixture`Index`
     .page`http://localhost:3000/basic_index.html`
     .before ( async (t) => {
-        // SETUP TESTS
+        testUtils.doMongoConnection();
+        testUtils.clearStudents();
+        testUtils.addSampleSet(test_user_set);
+    })
+    .after ( async (t) => {
+        testUtils.clearStudents();
     });
 
-    // TODO: Replace
-    test('Add test params' , async t => {
-
-        for (let i = 0; i < test_user_set.length; ++i){
-            await t
-            .typeText('#input-name', test_user_set[i].name)
-            .typeText('#input-grade', String(test_user_set[i].grade))
-            .click("#submit-new-student");
-        }
-
+    test('Verify test params were added' , async t => {
         await t
             .expect(Selector('#table-content').childElementCount).eql(test_user_set.length);
     });

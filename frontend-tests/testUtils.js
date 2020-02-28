@@ -21,6 +21,9 @@ testCafe_utils.clearStudents = async () => {
     await studentModel.deleteMany({});
 }
 
+testCafe_utils.addSampleSet = async (data) => {
+    await studentModel.insertMany(data);
+}
 
 
 module.exports = testCafe_utils;

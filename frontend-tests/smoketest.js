@@ -1,7 +1,15 @@
 import { Selector } from 'testcafe';
+const testUtils = require('./testUtils');
 
 fixture`Index`
-    .page`http://localhost:3000/basic_index.html`;
+    .page`http://localhost:3000/basic_index.html`
+    .before ( async (t) => {
+        testUtils.doMongoConnection();
+        testUtils.clearStudents();
+    })
+    .after ( async (t) => {
+        testUtils.clearStudents();
+    });
 
 test('Test basic input for a student', async t => {
     await t
