@@ -35,6 +35,8 @@ const test_user_set = [
     }
 ];
 
+let deletionCount = 0;
+
 fixture`Index`
     .page`http://localhost:3000/basic_index.html`
     .before ( async (t) => {
@@ -52,26 +54,35 @@ fixture`Index`
     });
 
 
-    // const middleIndex = Number(test_user_set.length/2 -1);
-    // const middleIndex = 1;
+    const middleIndex = Number(test_user_set.length/2 -1);
 
-    // test(`Delete the middle student of the set, which is at index: ${middleIndex}`, async t => {
+    test(`Delete the middle student of the set, which is at index: ${middleIndex}`, async t => {
 
-    //     // t deleteSelector = 
+        const studentData = test_user_set[middleIndex];
+        deletionCount++;
 
-    //     await t
-    //     .hover(Selector('#table-content .on-hover-show').nth(middleIndex))
-    //     await t.find('.link-delete').click()
-    //     .expect(Selector('#table-content tr .nameContent').nth(middleIndex).innerText).notEql(test_user_set[middleIndex].name)
-    //     .expect(Selector('#table-content').childElementCount).eql(test_user_set.length - 1);
+        await t
+            .hover(Selector('#table-content .on-hover-show').nth(middleIndex))
+            .click(Selector(`#delete-${studentData._id}`))
+            .expect(Selector('#table-content tr .nameContent').nth(middleIndex).innerText).notEql(test_user_set[middleIndex].name)
+            .expect(Selector('#table-content').childElementCount).eql(test_user_set.length - deletionCount);
 
-    //     await t
-    //         .hover(Selector('#table-content .on-hover-show').nth(middleIndex))
-    //         .click("#table-content .link-delete")
-    //         .expect(Selector('#table-content tr .nameContent').nth(middleIndex).innerText).notEql(test_user_set[middleIndex].name)
-    //         .expect(Selector('#table-content').childElementCount).eql(test_user_set.length - 1);
+        
+    });
+
+
+    test(`Delete the first student of the set, which is at index: ${0}`, async t => {
+
+        const studentData = test_user_set[0];
+        deletionCount++;
+
+        await t
+            .hover(Selector('#table-content .on-hover-show').nth(0))
+            .click(Selector(`#delete-${studentData._id}`))
+            .expect(Selector('#table-content').childElementCount).eql(test_user_set.length - deletionCount);
+    });
+
     
-    // });
     
 
 

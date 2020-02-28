@@ -662,12 +662,14 @@ function util_returnCreatedRowItemForStudent(student) {
     const editLink = $('<a></a>')
         .text('Edit')
         .attr('class', 'link-edit')
+        .attr('id', `edit-${student.id}`)
         .attr('href', '#')
         .attr('onclick', `click_editActionWithStudentID('${student.id}')`);
 
     const deleteLink = $('<a></a>')
         .text('Delete')
         .attr('class', 'link-delete')
+        .attr('id', `delete-${student.id}`)
         .attr('href', '#')
         .attr('onclick', `click_deleteRowWithStudentID('${student.id}')`);
 
@@ -682,12 +684,14 @@ function util_returnCreatedRowItemForStudent(student) {
     const saveLink = $('<a></a>')
         .text('Save')
         .attr('class', 'link-save')
+        .attr('id', `save-${student.id}`)
         .attr('href', '#')
         .attr('onclick', `updateRowWithStudentID('${student.id}')`);
 
     const cancelLink = $('<a></a>')
         .text('Cancel')
         .attr('class', 'link-cancel')
+        .attr('id', `cancel-${student.id}`)
         .attr('href', '#')
         .attr('onclick', `cancelActionWithStudentID('${student.id}')`);
 
