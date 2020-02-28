@@ -395,13 +395,13 @@ function view_setValidationDefaultStateForGradeInput() {
 
 // Retrieve name input for a specific name
 function view_getNameInputForId(id) {
-    return $(`#${uniqueIDPrefix}input-name${id}`).val();
+    return $(`#${uniqueIDPrefix}input-name${id}`).val().trim();
 }
 
 
 // Retrieve grade input for a specific id
 function view_getGradeInputForId(id) {
-    return $(`#${uniqueIDPrefix}input-grade${id}`).val();
+    return $(`#${uniqueIDPrefix}input-grade${id}`).val().trim();
 }
 
 
