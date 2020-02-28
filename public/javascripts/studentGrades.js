@@ -568,6 +568,7 @@ function disableEditingNameViewForStudentID(id) {
 
     // Show the specific table cell
     $(`#${uniqueIDPrefix}name${id} span`).removeAttr('class', 'edit-content-hidden');
+    $(`#${uniqueIDPrefix}name${id} span`).attr('class', 'nameContent');
 
     // Access and destroy the input
     $(`#${uniqueIDPrefix}input-name${id}`).remove();
@@ -599,6 +600,8 @@ function disableEditingGradeViewForStudentID(id) {
 
     // Show the specific table cell
     $(`#${uniqueIDPrefix}grade${id} span`).removeAttr('class', 'edit-content-hidden');
+    $(`#${uniqueIDPrefix}grade${id} span`).attr('class', 'gradeContent');
+
 
     // Access and destroy the input
     $(`#${uniqueIDPrefix}input-grade${id}`).remove();
