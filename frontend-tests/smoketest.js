@@ -3,11 +3,11 @@ const testUtils = require('./testUtils');
 
 fixture`Index`
     .page`http://localhost:3000/basic_index.html`
-    .before ( async (t) => {
+    .before(async (t) => {
         testUtils.doMongoConnection();
         testUtils.clearStudents();
     })
-    .after ( async (t) => {
+    .after(async (t) => {
         testUtils.clearStudents();
     });
 

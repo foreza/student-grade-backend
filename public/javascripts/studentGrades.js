@@ -156,8 +156,6 @@ function test_utility_logSortedData(studentData) {
     }
 
     formattedTestString += "]"
-    // console.log(studentData);
-    console.log(formattedTestString);
 }
 
 
@@ -175,7 +173,6 @@ function model_addNewStudent(studentObj) {
                 alert(connectionErrorString);
             });
         }).then((studentObj) => {
-            console.log(studentObj)
             students.push(studentObj);      // Add it to the actual array
         }
         );

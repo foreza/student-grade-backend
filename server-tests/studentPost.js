@@ -61,8 +61,6 @@ describe('Users', function () {
     for (let i = 0; i < Object.keys(testParams.invalidUsers).length; ++i) {
         it(`Add invalid user ${i} , verify response code (400)`, async function () {
 
-            console.log(testParams.invalidUsers[`test_user_invalid_${i}`]);
-
             try {
                 const response = await chai.request(app).post('/students').send(testParams.invalidUsers[`test_user_invalid_${i}`]);
                 assert.equal(response.status, 400, 'Response should be 400');

@@ -5,7 +5,9 @@ const yup = require('yup');
 
 
 middlewareCollection.logger = function (req, res, next) {
-    console.log(` Received ${req.method} request to: ${req.baseUrl}`)
+    if (process.env.NODE_ENV != 'production'){
+        console.log(` Received ${req.method} request to: ${req.baseUrl}`)
+    }
     next()
 }
 

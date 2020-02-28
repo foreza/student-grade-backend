@@ -14,7 +14,6 @@ var app = express();
 
 // Connect to DB
 const mongoConnectString = `mongodb://localhost:27017/student-db-${process.env.NODE_ENV}`;
-console.log(`Connecting to ${mongoConnectString}`);
 mongoose.connect(mongoConnectString, { useCreateIndex: true, useFindAndModify: false, useNewUrlParser: true, useUnifiedTopology: true });
 
 // Event handlers
